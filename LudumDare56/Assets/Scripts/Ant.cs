@@ -30,6 +30,8 @@ public class Ant : MonoBehaviour
     float deliveringTime = 1f;
     float antSpeed = 2.5f;
     float deathTimer = 20f;
+    float antStrength = 1f;
+    float antSize = 1f;
 
     //state machine
     antState currentState;
@@ -61,6 +63,7 @@ public class Ant : MonoBehaviour
         isActive = true;
         targetControl = GameObject.FindWithTag("targetControl");
         currentState = antState.Birthed;
+        GameControl.GameController.activeAnts++;
         AntIndividualization();
         StartCoroutine(StateHandling());
     }
@@ -72,9 +75,15 @@ public class Ant : MonoBehaviour
 
     private void AntIndividualization()
     {
+        //Load in current vals from GameControl
+        antSpeed = GameControl.GameController.GetSpeed();
+        deathTimer = GameControl.GameController.GetLifespan();
+        antStrength = GameControl.GameController.GetStrength();
+        antSize = GameControl.GameController.GetSize();
+
         //do some random number calc to make sure ants feel individual
         antSpeed = Random.Range(antSpeed - 0.5f, antSpeed + 0.5f);
-        deathTimer = Random.Range(deathTimer - 5f, deathTimer + 5f);
+        deathTimer = Random.Range(deathTimer - 10f, deathTimer + 10f);
     }
 
     IEnumerator StateHandling()
@@ -197,6 +206,8 @@ public class Ant : MonoBehaviour
         target = null;
         readyToTarget = false;
         readyToFeed = false;
+        GameControl.GameController.activeAnts--;
+        GameControl.GameController.deadAnts++;
         Debug.Log("Le ant is dead");
         yield return null;
     }
@@ -216,8 +227,11 @@ public class Ant : MonoBehaviour
             if (food.tag == "ant")
             {
                 bool result = food.GetComponent<Ant>().DeliverFood();
+                GameControl.GameController.deadAnts--;
+                GameControl.GameController.antsConsumed++;
             }
-            //increment the food counter here
+            //TODO - make sure to take the food's strength here
+            GameControl.GameController.foodConsumed++;
             food.transform.parent = null;
             food.SetActive(false);
             food = null;

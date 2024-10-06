@@ -8,6 +8,7 @@ TagManager:
   - foodPool
   - ant
   - targetControl
+  - slice
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - background
-  - 
+  - mutations
   - 
   - 
   - 

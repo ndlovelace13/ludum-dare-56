@@ -19,7 +19,7 @@ public class AntSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        spawnDelay = GameControl.GameController.GetSpawn();
     }
 
     IEnumerator SpawnHandler()
