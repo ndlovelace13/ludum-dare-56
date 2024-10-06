@@ -18,9 +18,10 @@ public class Ant : MonoBehaviour
     bool isAlive = true;
 
     //target acquisition
-    [SerializeField] GameObject target;
+    [SerializeField] public GameObject target;
     public GameObject home;
     GameObject testTarget;
+    [SerializeField] GameObject targetControl;
 
     //Index obj here
 
@@ -28,7 +29,7 @@ public class Ant : MonoBehaviour
     float feedingTime = 1f;
     float deliveringTime = 1f;
     float antSpeed = 2.5f;
-    float deathTimer = 30f;
+    float deathTimer = 20f;
 
     //state machine
     antState currentState;
@@ -52,11 +53,21 @@ public class Ant : MonoBehaviour
 
     private void OnEnable()
     {
+        
+    }
+
+    public void Activate()
+    {
         isActive = true;
-        testTarget = GameObject.FindWithTag("foodSource");
+        targetControl = GameObject.FindWithTag("targetControl");
         currentState = antState.Birthed;
         AntIndividualization();
         StartCoroutine(StateHandling());
+    }
+
+    private void OnDisable()
+    {
+        isActive = false;
     }
 
     private void AntIndividualization()
@@ -77,8 +88,17 @@ public class Ant : MonoBehaviour
                 case antState.Birthed:
                     //add to the targeting queue
                     //if target is acquired then go to travel mode
-                    target = testTarget;
-                    currentState = antState.Traveling;
+                    if (!readyToTarget)
+                    {
+                        readyToTarget = true;
+                        targetControl.GetComponent<FeedingHandler>().targetingAnts.Enqueue(this);
+                    }
+                    if (target != null && target != home)
+                    {
+                        readyToTarget = false;
+                        currentState = antState.Traveling;
+                    }
+                        
                     Debug.Log("Now Traveling");
                     break;
                 case antState.Traveling:
@@ -111,7 +131,6 @@ public class Ant : MonoBehaviour
                         if (food != null)
                         {
                             readyToFeed = false;
-                            target = home;
                             currentState = antState.Returning;
                             Debug.Log("Now Returning");
                         }
@@ -136,6 +155,7 @@ public class Ant : MonoBehaviour
                     {
                         currentTime = 0f;
                         //add to the targeting queue
+                        targetControl.GetComponent<FeedingHandler>().targetingAnts.Enqueue(this);
                         readyToTarget = true;
                         //increment the total, feed the queen
                         DeliverFood();
@@ -143,7 +163,6 @@ public class Ant : MonoBehaviour
                     else
                     {
                         //replace this with whatever is assigned from the targetQueue
-                        target = testTarget;
                         if (target != home)
                         {
                             readyToTarget = false;
@@ -169,6 +188,15 @@ public class Ant : MonoBehaviour
     IEnumerator DeathHandler()
     {
         //add the currentLocation to the Feeding Locations
+        targetControl.GetComponent<FeedingHandler>().foodSources.Add(gameObject);
+        if (target != null)
+        {
+            if (target.tag == "ant")
+                targetControl.GetComponent<FeedingHandler>().foodSources.Add(target);
+        }
+        target = null;
+        readyToTarget = false;
+        readyToFeed = false;
         Debug.Log("Le ant is dead");
         yield return null;
     }
@@ -178,18 +206,27 @@ public class Ant : MonoBehaviour
         foodInput.transform.SetParent(transform, false);
         foodInput.transform.localPosition = Vector3.up;
         food = foodInput;
+        target = home;
     }
     
-    public void DeliverFood()
+    public bool DeliverFood()
     {
-        if (food.tag == "ant")
-            food.GetComponent<Ant>().DeliverFood();
-        else
+        if (food != null)
         {
+            if (food.tag == "ant")
+            {
+                bool result = food.GetComponent<Ant>().DeliverFood();
+            }
             //increment the food counter here
-            food.transform.SetParent(null);
+            food.transform.parent = null;
             food.SetActive(false);
             food = null;
         }
+        return true;
+    }
+
+    public void AssignTarget(GameObject targetInput)
+    {
+        target = targetInput;
     }
 }

@@ -37,6 +37,8 @@ public class FeedingLocation : MonoBehaviour
                 //will need to assign an index and adjust the global lists here
                 Ant currentAnt = harvestQueue.Dequeue();
                 GameObject currentFood = foodPool.GetComponent<ObjectPool>().GetPooledObject();
+                //set the currentFood color to reflect the eaten color
+                //instantiate the "bite" circle here as well
                 currentFood.SetActive(true);
                 currentAnt.AssignFood(currentFood);
             }

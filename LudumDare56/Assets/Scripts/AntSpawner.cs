@@ -5,7 +5,7 @@ using UnityEngine;
 public class AntSpawner : MonoBehaviour
 {
     //Spawn Timer
-    float spawnDelay = 5f;
+    float spawnDelay = 3f;
 
     [SerializeField] GameObject antPool;
 
@@ -34,6 +34,7 @@ public class AntSpawner : MonoBehaviour
                 GameObject newAnt = antPool.GetComponent<ObjectPool>().GetPooledObject();
                 newAnt.transform.position = transform.position;
                 newAnt.SetActive(true);
+                newAnt.GetComponent<Ant>().Activate();
                 newAnt.GetComponent<Ant>().home = gameObject;
             }
             currentTime += Time.fixedDeltaTime;
