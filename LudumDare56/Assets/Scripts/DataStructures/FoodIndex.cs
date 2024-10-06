@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 
 // This class creates the Index object which is used for creating a 2D array of edible objects for the ants
 public class FoodIndex
 {
-    public bool isEmpty, canBeEaten;
-    public Vector2 pos;
-    public List<FoodIndex> neighbors;
-    public Color background;
-    public Color foreground;
-    public int strength;
+    private bool isOccupied, hasNeighbor;
+    private Vector2 pos;
+    private List<FoodIndex> neighbors;
+    private Color background;
+    private Color foreground;
+    private int strength;
 
 
     // default constructor
@@ -23,20 +22,20 @@ public class FoodIndex
         background = Color.clear;
         foreground = Color.clear;
         strength = -1;
-        isEmpty = false;
-        canBeEaten = false;
+        isOccupied = false;
+        hasNeighbor = false;
     }
 
     // constructor
-    public FoodIndex(Vector2 pos, List<FoodIndex> neighbors, Color background, Color foreground, int strength, bool isEmpty, bool canBeEaten)
+    public FoodIndex(Vector2 pos, List<FoodIndex> neighbors, Color background, Color foreground, int strength, bool isOccupied, bool hasNeighbor)
     {
         this.pos = pos;
         this.neighbors = neighbors;
         this.background = background;
         this.foreground = foreground;
         this.strength = strength;
-        this.isEmpty = isEmpty;
-        this.canBeEaten = canBeEaten;
+        this.isOccupied = isOccupied;
+        this.hasNeighbor = hasNeighbor;
     }
 
     // getters
@@ -50,19 +49,19 @@ public class FoodIndex
     public Color getBackground() { return background; }
     public Color getForeground() { return foreground; }
     public int getStrength() { return strength; }
-    public bool getEmpty() { return isEmpty; }
-    public bool getCanBeEaten() {  return canBeEaten; }
+    public bool getIsOccupied() { return isOccupied; }
+    public bool getHasNeighbor() {  return hasNeighbor; }
     #endregion
 
     // setters
     #region
-    public void setEmpty(bool isEmpty)
+    public void setIsOccupied(bool isOccupied)
         {
-            this.isEmpty = isEmpty;
+            this.isOccupied = isOccupied;
         }
-        public void setCanBeEaten(bool canBeEaten)
+        public void setHasNeighbor(bool hasNeighbor)
         {
-            this.canBeEaten = canBeEaten;
+            this.hasNeighbor = hasNeighbor;
         }
         public void setStrength(int strength)
         {
