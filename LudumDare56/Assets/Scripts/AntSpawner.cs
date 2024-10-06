@@ -5,7 +5,7 @@ using UnityEngine;
 public class AntSpawner : MonoBehaviour
 {
     //Spawn Timer
-    float spawnDelay = 5f;
+    float spawnDelay = 3f;
 
     [SerializeField] GameObject antPool;
 
