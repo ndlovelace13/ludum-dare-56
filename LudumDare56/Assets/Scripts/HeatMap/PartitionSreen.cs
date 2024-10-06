@@ -30,12 +30,11 @@ public class PartitionSreen : MonoBehaviour
 
     [SerializeField] private Sprite sprite;
     [SerializeField] private LayerMask bgMask;
-    [SerializeField] private GameObject controller;
     [SerializeField] private int mapIndex;
 
     private List<Color> foundColors = new List<Color>();
     private int[] countColors = new int[200];
-    private FoodIndex[,] foodMap;
+    public FoodIndex[,] foodMap;
     private List<FoodIndex> neighbors = new List<FoodIndex>();
     // Start is called before the first frame update
     void Start()
@@ -56,6 +55,9 @@ public class PartitionSreen : MonoBehaviour
             for (int u = 0; u < rows; u++)
                 foodMap[p, u] = new FoodIndex();
 
+        float offsetx = spriteRenderer.transform.localScale.x;
+        float offsety = spriteRenderer.transform.localScale.y;
+
 
         SpriteRenderer renderer;
         Sprite monkey;
@@ -65,60 +67,63 @@ public class PartitionSreen : MonoBehaviour
         {
             for (int j = 0; j < rows; j++)
             {
-                gridMap[i, j] = new Vector2(scale / 2 + scale * i, scale / 2 + scale * j);
+                gridMap[i, j] = new Vector2((scale / 2 + scale * i ) + offsetx, (scale / 2 + scale * j) + offsety);
                 //Debug.Log(gridMap[i, j]);
 
                 // now that we have location for our gridmap, we can translate the heatmap and
                 // generate the bounds list
                 Vector2 point = gridMap[i, j];
                 // generate a raycast with origin of point that we are currently at on grid
-
+                //Debug.Log(point);
                 Texture2D text = spriteRenderer.sprite.texture;
-                Collider2D hit = Physics2D.OverlapPoint(new Vector2((scale * 2 - scale * point.x), (int)(scale * 2 - scale * point.y)), bgMask);
+                Collider2D hit = Physics2D.OverlapPoint(new Vector2(point.x, point.y), bgMask);
+                Color hitColor = new Color();
 
+
+                //Debug.Log(new Vector2((scale * 2 - scale * point.x), (int)(scale * 2 - scale * point.y)));
+
+                bool rayHit = false;
                 if (hit)
                 {
                     renderer = hit.transform.root.GetComponent<SpriteRenderer>();
 
                     monkey = renderer.sprite;
 
-                    int x = (int)Mathf.FloorToInt(point.x * monkey.pixelsPerUnit);
-                    int y = (int)Mathf.FloorToInt(point.y * monkey.pixelsPerUnit);
+                    int x = (int)Mathf.FloorToInt((point.x - offsetx) * monkey.pixelsPerUnit);
+                    int y = (int)Mathf.FloorToInt((point.y - offsety)* monkey.pixelsPerUnit);
 
-                    Color color = monkey.texture.GetPixel(x, y);
+                    Debug.Log(x + " " + y);
 
+
+                    hitColor = monkey.texture.GetPixel(x, y);    
                     // if color is not clear, we hit a match for our object
-                    if (color != Color.clear)
+                    if (hitColor != Color.clear)
                     {
-                        // manually set alpha to ensure correct color accuracy
-                        color.a = 1;
-                        // create actual index object at current index with an empty neighbors list and tentative canBeEaten value
-                        foodMap[i, j] = new FoodIndex(point, neighbors, Color.blue, color, FindStrength(color), false, false);
+                        rayHit = true;
                     }
                     // didn't find a color so index is now set to an empty node
                     else
                     {
-                        foodMap[i, j] = new FoodIndex(point, neighbors, Color.blue, color, -1, true, false);
-
+                        rayHit = false;
                     }
 
 
                     // printing functions (not very relevant)
                     #region
-                    if (!foundColors.Contains(color))
-                    {
-                        foundColors.Add(color);
-                    }
-
-                    for (int m = 0; m < foundColors.Count; m++)
-                    {
-                        if (color == foundColors[m])
-                        {
-                            countColors[m]++;
-                        }
-                    }
                     #endregion
+                }
+                if (rayHit)
+                {
+                    // manually set alpha to ensure correct color accuracy
+                    hitColor.a = 1;
+                    Debug.Log(hitColor);
+                    // create actual index object at current index with an empty neighbors list and tentative canBeEaten value
+                    foodMap[i, j] = new FoodIndex(gridMap[i, j], neighbors, hitColor, Color.blue, FindStrength(hitColor), false, false);
 
+                }
+                else
+                {
+                    foodMap[i, j] = new FoodIndex(gridMap[i, j], neighbors, hitColor, Color.blue, -1, true, false);
                 }
             }
             #endregion
@@ -164,18 +169,21 @@ public class PartitionSreen : MonoBehaviour
             for (int j = 0; j < foodMap.GetLength(1); j++)
             {
                 // check if food exists at this index
-                if (foodMap[i, j].getEmpty() == false)
+                if (foodMap[i, j].getIsOccupied() == false)
                 {
                     neighbors = new List<FoodIndex>();
                     // clear neighbors and populate list
                     PopulateNeighbors(i, j);
                     foodMap[i, j].setNeighbors(neighbors);
+                    Debug.Log(foodMap[i, j].getNeighbors().Count);
                     // if neighbor count of node isn't 4, means that it isn't completely landlocked, therefore
                     // it can be eaten
-                    if (neighbors.Count < 4)
+                    if (neighbors.Count == 4)
                     {
-                        foodMap[i, j].setCanBeEaten(true);
+                        foodMap[i, j].setHasNeighbor(false);
                     }
+                    else
+                        foodMap[i,j].setHasNeighbor(true);
                 }
             }
         } // end of for loop
@@ -194,10 +202,16 @@ public class PartitionSreen : MonoBehaviour
         {
             for (int n = 0; n < foodMap.GetLength(1); n++)
             {
-                Debug.Log(foodMap[l, n].getNeighbors().Count);
+                //Debug.Log(foodMap[l, n].getPos());
             }
-        }   
+        }
+
+        // print generated GamecontrolMap
         
+        for (int q = 0; q < GameControl.GameController.leafMap.GetLength(0); q++)
+            for (int r = 0; r < GameControl.GameController.leafMap.GetLength(1); r++)
+                Debug.Log(GameControl.GameController.leafMap[q, r].getBackground());
+
     }   // end of start()
 
     // helper function to take a Color object and return an integer
@@ -221,9 +235,9 @@ public class PartitionSreen : MonoBehaviour
         if (i == 0 && j == 0)
         {
             Debug.Log("North West Corner");
-            if (!foodMap[i + 1, j].getEmpty())
+            if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i+1, j]);
-            if (!foodMap[i, j + 1].getEmpty())
+            if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
             return;
         }
@@ -231,9 +245,9 @@ public class PartitionSreen : MonoBehaviour
         if ((i == foodMap.GetLength(0) - 1) && (j == foodMap.GetLength(1) - 1))
         {
             Debug.Log("South East Corner");
-            if (!foodMap[i - 1, j].getEmpty())
+            if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i-1, j]);
-            if (!foodMap[i, j - 1].getEmpty())
+            if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j-1]);
             return;
         }
@@ -241,9 +255,9 @@ public class PartitionSreen : MonoBehaviour
         if (i == 0 && j == foodMap.GetLength(1) - 1)
         {
             Debug.Log("South West Corner");
-            if (!foodMap[i, j - 1].getEmpty())
+            if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j - 1]);
-            if (!foodMap[i + 1, j].getEmpty())
+            if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i+1, j]);
             return;
         }
@@ -251,9 +265,9 @@ public class PartitionSreen : MonoBehaviour
         if (i == foodMap.GetLength(0) - 1 && j == 0)
         {
             Debug.Log("North East Coner");
-            if (!foodMap[i - 1, j].getEmpty())
+            if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
-            if (!foodMap[i, j + 1].getEmpty())
+            if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
             return;
         }
@@ -262,11 +276,11 @@ public class PartitionSreen : MonoBehaviour
         {
             Debug.Log("East Side");
             // if i and j are both positive here, can check South, West, North
-            if (!foodMap[i - 1, j].getEmpty())
+            if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i-1, j]);
-            if (!foodMap[i, j - 1].getEmpty())
+            if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j-1]);
-            if (!foodMap[i, j + 1].getEmpty())
+            if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
             return;
         }
@@ -275,11 +289,11 @@ public class PartitionSreen : MonoBehaviour
         {
             Debug.Log("South Side");
             // i and j both positive, can check North, East, West
-            if (!foodMap[i - 1, j].getEmpty())
+            if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
-            if (!foodMap[i + 1, j].getEmpty())
+            if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i + 1, j]);
-            if (!foodMap[i, j - 1].getEmpty())
+            if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j-1]);
             return;
             
@@ -289,11 +303,11 @@ public class PartitionSreen : MonoBehaviour
         {
             Debug.Log("North Side");
             // j is 0, i is positive, can check South, East, West
-            if (!foodMap[i - 1, j].getEmpty())
+            if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
-            if (!foodMap[i + 1, j].getEmpty())
+            if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i + 1, j]);
-            if (!foodMap[i, j + 1].getEmpty())
+            if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
             return;
         }
@@ -302,11 +316,11 @@ public class PartitionSreen : MonoBehaviour
         {
             Debug.Log("West Side");
             // if i is 0, j is positive, can check South, North, East
-            if (!foodMap[i + 1, j].getEmpty())
+            if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i+1,j]);  
-            if (!foodMap[i, j + 1].getEmpty())
+            if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j+1]);
-            if (!foodMap[i, j - 1].getEmpty())
+            if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j - 1]);
             return;
         }
@@ -314,13 +328,13 @@ public class PartitionSreen : MonoBehaviour
         if (i > 0 && j > 0 && i < foodMap.GetLength(0) - 1 && j < foodMap.GetLength(1) - 1)
         {
             Debug.Log("Body");
-            if (!foodMap[i - 1, j].getEmpty())
+            if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
-            if (!foodMap[i, j - 1].getEmpty())
+            if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j - 1]);
-            if (!foodMap[i + 1, j].getEmpty()) 
+            if (!foodMap[i + 1, j].getIsOccupied()) 
                 neighbors.Add(foodMap[i + 1, j]);
-            if (!foodMap[i, j + 1].getEmpty())
+            if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
             return;
         }
@@ -332,21 +346,22 @@ public class PartitionSreen : MonoBehaviour
         switch (mapIndex)
         {
             case 0:
-                controller.gameObject.GetComponent<GameControl>().leafMap = foodMap; break;
+                GameControl.GameController.leafMap = (foodMap);
+                break;
             case 1:
-                controller.gameObject.GetComponent<GameControl>().appleMap = foodMap; break;
+                GameControl.GameController.appleMap = foodMap; break;
             case 2:
-                controller.gameObject.GetComponent<GameControl>().meatMap = foodMap; break;
+                GameControl.GameController.meatMap = foodMap; break;
             case 3:
-                controller.gameObject.GetComponent<GameControl>().carterMap = foodMap; break;
+                GameControl.GameController.carterMap = foodMap; break;
             case 4:
-                controller.gameObject.GetComponent<GameControl>().atmMap = foodMap; break;
+                GameControl.GameController.atmMap = foodMap; break;
             case 5:
-                controller.gameObject.GetComponent<GameControl>().carMap = foodMap; break;
+                GameControl.GameController.carMap = foodMap; break;
             case 6:
-                controller.gameObject.GetComponent<GameControl>().houseMap = foodMap; break;
+                GameControl.GameController.houseMap = foodMap; break;
             case 7:
-                controller.gameObject.GetComponent<GameControl>().nuclearMap = foodMap; break;
+                GameControl.GameController.nuclearMap = foodMap; break;
         }
     }
     
