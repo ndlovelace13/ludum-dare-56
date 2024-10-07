@@ -25,7 +25,6 @@ public class EatFood : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && finishInitial)
         {
-
             for (int i = 0; i < 50; i ++)
             {
                 // pick a random open index object

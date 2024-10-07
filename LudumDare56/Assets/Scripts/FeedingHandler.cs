@@ -46,7 +46,7 @@ public class FeedingHandler : MonoBehaviour
                 // segregate types of food sources
                 foreach(GameObject source in foodSources)
                 {
-                    if (source.name == "TestTarget")
+                    if (source.tag != "ant")
                         foodMapTargets.Add(source);
                     else
                         antTargets.Add(source);
@@ -83,7 +83,7 @@ public class FeedingHandler : MonoBehaviour
                             Debug.Log("Harvest Val: " + (int)GameControl.GameController.harvest * 100);
                             Debug.Log("Explore Val: " + (int)GameControl.GameController.explore * 100);
                             // if less than the random val we generated, then we will harvest
-                            if ((int)(GameControl.GameController.harvest * 100) - randomVal > 0)
+                            if ((int)(GameControl.GameController.harvest * 100f) - randomVal > 0)
                             {
                                 randomFoodInd = Random.Range(0, GameControl.GameController.baseIndex + 1);
                                 // if no food to be found, don't target
@@ -91,6 +91,7 @@ public class FeedingHandler : MonoBehaviour
                                 {
                                     randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
                                     Debug.Log("No Food to be found at foodmap");
+                                    yield return new WaitForEndOfFrame();
                                 };
                                 Debug.Log("Harvesting: " + randomFoodInd);
                                 target = sortedFoodTargets[randomFoodInd];
@@ -112,6 +113,7 @@ public class FeedingHandler : MonoBehaviour
                             {
                                 randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
                                 Debug.Log("No Food to be found at foodmap");
+                                yield return new WaitForEndOfFrame();
                             }
                             target = sortedFoodTargets[randomFoodInd];
                             currentAnt.AssignTarget(target);
@@ -132,7 +134,7 @@ public class FeedingHandler : MonoBehaviour
                         Debug.Log("Harvest Val: " + (int)(GameControl.GameController.harvest * 100));
                         Debug.Log("Explore Val: " + (int)(GameControl.GameController.explore * 100));
                         // if less than the random val we generated, then we will harvest
-                        if ((int)(GameControl.GameController.harvest * 100) - randomVal > 0)
+                        if ((int)(GameControl.GameController.harvest * 100f) - randomVal > 0)
                         {
                             randomFoodInd = Random.Range(0, GameControl.GameController.baseIndex + 1);
                             // if no food to be found, don't target
@@ -140,6 +142,7 @@ public class FeedingHandler : MonoBehaviour
                             {
                                 randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
                                 Debug.Log("No Food to be found at foodmap");
+                                yield return new WaitForEndOfFrame();
                             }
                             Debug.Log("Harvesting: " + randomFoodInd);
                             target = sortedFoodTargets[randomFoodInd];
@@ -162,6 +165,7 @@ public class FeedingHandler : MonoBehaviour
                         {
                             randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
                             Debug.Log("No Food to be found at foodmap");
+                            yield return new WaitForEndOfFrame();
                         }
                         target = sortedFoodTargets[randomFoodInd];
                         currentAnt.AssignTarget(target);
