@@ -13,6 +13,7 @@ public class SliceDetect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     bool sliceHover = false;
     GameObject nextUpgrade;
     [SerializeField] GameObject[] powerObjs;
+    AudioSource audioSource;
     bool maxed = false;
 
     bool up = false;
@@ -80,6 +81,8 @@ public class SliceDetect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (GameControl.GameController.skillPoints > 0 && currentPower < powerObjs.Length)
         {
+            audioSource = GetComponentInParent<AudioSource>();
+            audioSource.Play();
             GameControl.GameController.antLevels[powerIndex]++;
             GameControl.GameController.skillPoints--;
             GameControl.GameController.UpgradeUpdate();

@@ -23,15 +23,7 @@ public class EatFood : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && finishInitial)
-        {
-            for (int i = 0; i < 50; i ++)
-            {
-                // pick a random open index object
-                FoodIndex randomFood = chooseFoodIndex();
-                eatFoodIndex(randomFood);
-            }
-        }
+
     }
 
     // assigns foodMap based on the given index (generated on partition screen finish)
