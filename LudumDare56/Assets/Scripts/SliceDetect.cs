@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using System.Linq;
 
 public class SliceDetect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -37,6 +39,7 @@ public class SliceDetect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         StopAllCoroutines();
         powerIndex = givenIndex;
         currentPower = GameControl.GameController.antLevels[powerIndex];
+        SwitchSprite();
         for (int i = 0; i < currentPower; i++)
         {
             powerObjs[i].SetActive(true);
@@ -47,6 +50,19 @@ public class SliceDetect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else
             maxed = true;
         StartCoroutine(UpgradeFlash());
+    }
+
+    private void SwitchSprite()
+    {
+        for (int i = 0; i < powerObjs.Length; i++)
+        {
+            powerObjs[i].SetActive(true);
+            if (powerIndex < 5)
+                powerObjs[i].GetComponent<Image>().sprite = powerObjs[i].GetComponent<Wedge>().basicSprite;
+            else
+                powerObjs[i].GetComponent<Image>().sprite = powerObjs[i].GetComponent<Wedge>().alternateSprite;
+            powerObjs[i].SetActive(false);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
