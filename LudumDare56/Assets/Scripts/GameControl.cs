@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// encapsulation class for food completion behavior
 public class CompletionObject
 {
     public float completionAmt = 0.0f;
@@ -157,6 +158,9 @@ public class GameControl : MonoBehaviour
     public int foodConsumed = 0;
     public int antsConsumed = 0;
 
+    // list for all spawners
+    public GameObject[] spawnerList;
+
 
     // Start is called before the first frame update
     void Start()
@@ -167,6 +171,7 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // just a check to ensure we only calculate this when there is actual data loaded
         if (initialAppleFood != 0)
         {
             // update each completion object's completion value
@@ -231,6 +236,9 @@ public class GameControl : MonoBehaviour
         carCompletion = new CompletionObject();
         houseCompletion = new CompletionObject();
         nuclearCompletion = new CompletionObject();
+
+        // fill spawner list via tag
+        spawnerList = GameObject.FindGameObjectsWithTag("spawners");
     }
 
     public void UpgradeInit()
