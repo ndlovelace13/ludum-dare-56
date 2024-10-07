@@ -22,6 +22,7 @@ public class Ant : MonoBehaviour
     public GameObject home;
     GameObject testTarget;
     [SerializeField] GameObject targetControl;
+    Animator animator;
 
     //Index obj here
 
@@ -61,6 +62,8 @@ public class Ant : MonoBehaviour
     public void Activate()
     {
         isActive = true;
+        transform.localScale = Vector3.one;
+        animator = GetComponent<Animator>();
         targetControl = GameObject.FindWithTag("targetControl");
         currentState = antState.Birthed;
         GameControl.GameController.activeAnts++;
@@ -97,6 +100,7 @@ public class Ant : MonoBehaviour
                 case antState.Birthed:
                     //add to the targeting queue
                     //if target is acquired then go to travel mode
+                    animator.SetBool("walk", false);
                     if (!readyToTarget)
                     {
                         readyToTarget = true;
@@ -111,6 +115,7 @@ public class Ant : MonoBehaviour
                     Debug.Log("Now Traveling");
                     break;
                 case antState.Traveling:
+                    animator.SetBool("walk", true);
                     //go to the target location
                     transform.position = Vector3.MoveTowards(transform.position, target.transform.position, antSpeed * Time.fixedDeltaTime);
                     if (Vector3.Distance(transform.position, target.transform.position) < 0.01f)
@@ -119,8 +124,9 @@ public class Ant : MonoBehaviour
                         currentState = antState.Feeding;
                     }
                     break;
-                case antState.Feeding: 
+                case antState.Feeding:
                     //wait for feedCooldown to be done
+                    animator.SetBool("walk", false);
                     if (currentTime < feedingTime && !readyToFeed)
                     {
                         currentTime += Time.deltaTime;
@@ -142,10 +148,12 @@ public class Ant : MonoBehaviour
                             readyToFeed = false;
                             currentState = antState.Returning;
                             Debug.Log("Now Returning");
+                            Flip();
                         }
                     }
                     break;
                 case antState.Returning:
+                    animator.SetBool("walk", true);
                     //go to the home location
                     transform.position = Vector3.MoveTowards(transform.position, target.transform.position, antSpeed * Time.fixedDeltaTime);
                     if (Vector3.Distance(transform.position, target.transform.position) < 0.01f)
@@ -155,6 +163,7 @@ public class Ant : MonoBehaviour
                     }
                     break;
                 case antState.Delivering:
+                    animator.SetBool("walk", false);
                     //wait for deliverCooldown to be done
                     if (currentTime < deliveringTime && !readyToTarget)
                     {
@@ -177,10 +186,12 @@ public class Ant : MonoBehaviour
                             readyToTarget = false;
                             currentState = antState.Traveling;
                             Debug.Log("now traveling");
+                            Flip();
                         }
                     }
                     break;
                 case antState.Death:
+                    animator.SetTrigger("death");
                     StartCoroutine(DeathHandler());
                     yield break;
             }
@@ -248,5 +259,12 @@ public class Ant : MonoBehaviour
     public void AssignTarget(GameObject targetInput)
     {
         target = targetInput;
+    }
+
+    public void Flip()
+    {
+        Vector3 newScale = transform.localScale;
+        newScale.x *= -1;
+        transform.localScale = newScale;
     }
 }
