@@ -164,15 +164,15 @@ public class GameControl : MonoBehaviour
         if (initialAppleFood != 0)
         {
             // update each completion object's completion value
-            //leafCompletion.calcPerc(initialLeafFood - totalLeafFood, initialLeafFood);
-            Debug.Log(appleCompletion.calcPerc(initialAppleFood - totalAppleFood, initialAppleFood));
-            //meatCompletion.calcPerc(totalMeatFood, initialMeatFood);
-            //carterCompletion.calcPerc(totalCarterFood, initialCarterFood);
-            //atmCompletion.calcPerc(totalAtmFood, initialAtmFood);
-            //carCompletion.calcPerc(totalCarFood, initialCarFood);
-            //houseCompletion.calcPerc(totalHouseFood, initialHouseFood);
-            //nuclearCompletion.calcPerc(totalNuclearFood, initialNuclearFood);
-            Debug.Log("apple comlpetion: " + appleCompletion.completionAmt);
+            leafCompletion.calcPerc(initialLeafFood - totalLeafFood, initialLeafFood);
+            appleCompletion.calcPerc(initialAppleFood - totalAppleFood, initialAppleFood);
+            meatCompletion.calcPerc(initialMeatFood - totalMeatFood, initialMeatFood);
+            carterCompletion.calcPerc(initialCarterFood - totalCarterFood, initialCarterFood);
+            atmCompletion.calcPerc(initialAtmFood - totalAtmFood, initialAtmFood);
+            carCompletion.calcPerc(initialCarFood - totalCarFood, initialCarFood);
+            houseCompletion.calcPerc(initialHouseFood - totalHouseFood, initialHouseFood);
+            nuclearCompletion.calcPerc(initialNuclearFood - totalNuclearFood, initialNuclearFood);
+            // Debug.Log("apple comlpetion: " + appleCompletion.completionAmt);
 
             // check each completion object's state
             if (leafCompletion.firstChkPnt() || leafCompletion.secondChkPnt() || leafCompletion.thirdChkPnt() || leafCompletion.fifthChkPnt())
