@@ -192,7 +192,17 @@ public class GameControl : MonoBehaviour
 
     // event flag
     public bool triggered = false;
+
+    // audio
+    public AudioSource audioSource;
+    public AudioSource winSource;
+    public AudioSource loseSource;
+    public AudioSource messageSource;
+
     #endregion
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -262,7 +272,7 @@ public class GameControl : MonoBehaviour
             Debug.Log("timechunk is working");
             // failed to meet quota
             if (foodConsumed + antsConsumed < quota)
-            { Debug.Log("YOU LOST!!!!"); }
+            { Debug.Log("YOU LOST!!!!"); loseSource.Play(); }
             // met quota
             else
             {
@@ -275,6 +285,7 @@ public class GameControl : MonoBehaviour
             // run code for checking if event will occur
             if (triggerEvent())
             {
+                audioSource.Play();
                 triggered = true;
             }
         }
@@ -285,7 +296,10 @@ public class GameControl : MonoBehaviour
         // Win state Handler TO DO: IMPLEMENT SCENE CHANGES FOR WINNING GAME HERE
         //---------------------------------------------------
         if (checkWinState())
+        {
+            winSource.Play();
             Debug.Log("YOU WON");
+        }
 
     }
 
@@ -294,7 +308,6 @@ public class GameControl : MonoBehaviour
         GameController = this;
         DontDestroyOnLoad(gameObject);
         UpgradeInit();
-
 
         // initialize all completion objects
         leafCompletion = new CompletionObject("Leaf");
@@ -454,6 +467,7 @@ public class GameControl : MonoBehaviour
     // function for updating textfield
     public void writeText(string text)
     {
+        messageSource.Play();
         textfield.text += text + "\n";
     }
 

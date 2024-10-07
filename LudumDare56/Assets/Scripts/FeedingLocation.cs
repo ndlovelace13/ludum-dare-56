@@ -39,6 +39,7 @@ public class FeedingLocation : MonoBehaviour
         int indivFood = 0;
 
         EatFood foodObject = GetComponentInParent<EatFood>();
+        AudioSource audioSource = GetComponent<AudioSource>();
 
         while (true)
         {
@@ -133,6 +134,9 @@ public class FeedingLocation : MonoBehaviour
                             currentAnt.AssignFood(currentFood);
                         }
                         foodObject.eatFoodIndex(chosenFoodIndex);
+                        if (!audioSource.isPlaying) { audioSource.Play(); }
+                        else { audioSource.Play(); }
+
                         chosenFoodIndex = null;
                     }
                     else
