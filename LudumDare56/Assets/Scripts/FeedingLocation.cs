@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FeedingLocation : MonoBehaviour
@@ -125,6 +126,7 @@ public class FeedingLocation : MonoBehaviour
                             currentFood.GetComponent<SpriteRenderer>().color = chosenFoodIndex.getBackground();
 
                             // assign food value 
+                            // tie in the luck based thing here
                             currentFood.GetComponent<Food>().foodamt = indivFood;
 
                             currentFood.SetActive(true);
@@ -137,6 +139,7 @@ public class FeedingLocation : MonoBehaviour
                     {
                         Debug.Log("TotalStr was not larger");
                     }
+                    
                 }
             }
             yield return new WaitForFixedUpdate();

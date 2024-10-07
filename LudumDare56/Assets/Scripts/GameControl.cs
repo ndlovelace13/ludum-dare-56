@@ -1,22 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
+using UnityEditor.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.VFX;
 
 // encapsulation class for food completion behavior
 public class CompletionObject
 {
     public float completionAmt = 0.0f;
+    public string name;
     public bool doneFirst;
     public bool doneSecond;
     public bool doneThird;
     public bool doneFourth;
     public bool doneFifth;
 
-    public CompletionObject()
+    public CompletionObject(string name)
     {
         completionAmt = 0.0f;
+        this.name = name;
         doneFirst = false;
         doneSecond = false;
         doneThird = false;
@@ -28,6 +33,7 @@ public class CompletionObject
     {
         if (completionAmt >= 0.10f && doneFirst == false)
         {
+            GameControl.GameController.writeText(name + " 10% consumed, skill point granted");
             doneFirst = true;
             return true;
         }
@@ -37,6 +43,7 @@ public class CompletionObject
     {
         if (completionAmt >= 0.25f && doneSecond == false)
         {
+            GameControl.GameController.writeText(name + " 25% consumed, skill point granted");
             doneSecond = true;
             return true;
         }
@@ -46,6 +53,7 @@ public class CompletionObject
     {
         if (completionAmt >= 0.50f && doneThird == false)
         {
+            GameControl.GameController.writeText(name + " 50% consumed, skill point granted");
             doneThird = true;
             return true;
         }
@@ -55,6 +63,7 @@ public class CompletionObject
     {
         if (completionAmt >= 0.75f && doneFourth == false)
         {
+            GameControl.GameController.writeText(name + " 75% consumed, base point granted");
             doneFourth = true;
             return true;
         }
@@ -64,6 +73,7 @@ public class CompletionObject
     {
         if (completionAmt == 1.00f && doneFifth == false)
         {
+            GameControl.GameController.writeText(name + " 100% consumed, skill point granted. Your Ants grow hungry");
             doneFifth = true;
             return true;
         }
@@ -77,9 +87,9 @@ public class CompletionObject
 
 }
 
-
 public class GameControl : MonoBehaviour
 {
+    #region
     public static GameControl GameController;
     public FoodIndex[,] leafMap;
     public FoodIndex[,] appleMap;
@@ -120,7 +130,6 @@ public class GameControl : MonoBehaviour
     public CompletionObject houseCompletion;
     public CompletionObject nuclearCompletion;
 
-
     // super ant storm cooldown
     public float superCooldown = -1;
 
@@ -151,7 +160,6 @@ public class GameControl : MonoBehaviour
     public List<float[]> antUpgrades;
     public List<int> antLevels;
 
-
     //stats
     public int basePoints = 2;
     public int skillPoints = 0;
@@ -166,14 +174,25 @@ public class GameControl : MonoBehaviour
     public float explore = 0.0f;
 
     // quota to reach
-    private int quota = 100;
-    public int timeChunk = 5;
+    private int quota = 20;
+    public int timeChunk = 20;
     public float globalClock = 1.0f;
 
     // list for all spawners
     public GameObject[] spawnerList;
 
+    // text field
+    public TMP_Text textfield;
 
+    // event probability
+    public float eventProb = 0.01f;
+    public int radEventWeight = 1;
+    public int chemEventWeight = 1;
+    public int attkEventWeight = 1;
+
+    // event flag
+    public bool triggered = false;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -183,6 +202,7 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         // just a check to ensure we only calculate this when there is actual data loaded
         if (initialAppleFood != 0)
         {
@@ -231,17 +251,13 @@ public class GameControl : MonoBehaviour
             if (nuclearCompletion.fourthChkPnt()) basePoints++;
         }
 
-        // --------------------------------------------------------
-        // TO DO: Need to remove Getkeypress and put onto a button somewhere
-        // -------------------------------------------------------
-
         // -----------------------------------------------------
-        // Time handler for quota system TO DO: IMPLEMENT SCENE CHANGES FOR LOSING QUOTA HERE
+        // Time handler for quota system + EventTrigger     TO DO: IMPLEMENT SCENE CHANGES FOR LOSING QUOTA HERE
         // -----------------------------------------------------
         globalClock += Time.fixedDeltaTime;
         //Debug.Log((int)globalClock);
         //Debug.Log(timeChunk);
-        if ((int) globalClock == timeChunk)
+        if ((int)globalClock == timeChunk && triggered == false)
         {
             Debug.Log("timechunk is working");
             // failed to meet quota
@@ -251,11 +267,19 @@ public class GameControl : MonoBehaviour
             else
             {
                 // set new quota
-                quota = quota + (baseIndex * quota);
+                quota = quota + ((baseIndex + 1) * quota);
                 // set new time limit
-                timeChunk += 30;
+                timeChunk += 20;
+            }
+
+            // run code for checking if event will occur
+            if (triggerEvent())
+            {
+                triggered = true;
             }
         }
+        else if ((int)globalClock != timeChunk)
+            triggered = false;
 
         // --------------------------------------------------
         // Win state Handler TO DO: IMPLEMENT SCENE CHANGES FOR WINNING GAME HERE
@@ -273,14 +297,14 @@ public class GameControl : MonoBehaviour
 
 
         // initialize all completion objects
-        leafCompletion = new CompletionObject();
-        appleCompletion = new CompletionObject();
-        meatCompletion = new CompletionObject();
-        carterCompletion = new CompletionObject();
-        atmCompletion = new CompletionObject();
-        carCompletion = new CompletionObject();
-        houseCompletion = new CompletionObject();
-        nuclearCompletion = new CompletionObject();
+        leafCompletion = new CompletionObject("Leaf");
+        appleCompletion = new CompletionObject("Apple");
+        meatCompletion = new CompletionObject("Meat");
+        carterCompletion = new CompletionObject("Carter Statue");
+        atmCompletion = new CompletionObject("ATM");
+        carCompletion = new CompletionObject("PT Cruiser");
+        houseCompletion = new CompletionObject("A Family Guy's House");
+        nuclearCompletion = new CompletionObject("Nuclear Power Plant");
 
         spawnerList = GameObject.FindGameObjectsWithTag("spawners");
         spawnerList = spawnerList.OrderBy(x => x.transform.position.x).ToArray<GameObject>();
@@ -292,7 +316,6 @@ public class GameControl : MonoBehaviour
             spawnerList[i].SetActive(false);
         }
         spawnerList[0].SetActive(true);
-
     }
 
     public void UpgradeInit()
@@ -402,9 +425,10 @@ public class GameControl : MonoBehaviour
         harvest = 1.0f - actionVal;
         explore = actionVal;
     }
+
+    // function for handling upgradeBase button
     public void UpgradeBase()
     {
-        Debug.Log("Pressed A");
         // if player has any basePoints to spend
         if (basePoints > 0)
         {
@@ -421,10 +445,99 @@ public class GameControl : MonoBehaviour
             }
             else
             {
-                Debug.Log("No More Bases to Buy!");
+                writeText("No More Bases to Buy!");
             }
         }
-        else { Debug.Log("Not Enough Base Points!"); }
+        else { writeText("Not Enough Base Points!"); }
     }
 
+    // function for updating textfield
+    public void writeText(string text)
+    {
+        textfield.text += text + "\n";
+    }
+
+    // returns true if given probability parameters
+    public bool triggerEvent()
+    {
+        // base chance of triggering event check
+        int randomInt = Random.Range(0, 100);
+
+        // event occurs
+        if ((eventProb * 100f) - randomInt > 0)
+        {
+            generateInconvenience();
+
+            // reduce probability by a little to prevent event overflow
+            eventProb -= (Mathf.Abs(eventProb - 1)) / 2;
+            return true;
+        }
+        // event did not occur
+        else
+        {
+            Debug.Log("didn't generate inconvenience");
+            eventProb += 0.01f;
+            return false;
+        }
+    }
+
+    // 
+    public void generateInconvenience()
+    {
+        Debug.Log("Generating inconveince");
+        // figure out the type of event
+        // sum all weights
+        int weightSum = (radLvl + 1) * 10 + (pestLvl + 1) * 10 + (exoLvl + 1) * 10;
+
+        int randomNum = Random.Range(0, weightSum);
+
+        // grab all ants rn
+        List<GameObject> currentAnts = GameObject.FindGameObjectsWithTag("ant").ToList();
+        // check brackets
+
+        // radiation event happened
+        if (randomNum >= 0 && randomNum <= radEventWeight)
+        {
+            // all ants lifespan reduced by 1/2
+            foreach (GameObject ant in currentAnts)
+            {
+                ant.GetComponent<Ant>().deathTimer = ant.GetComponent<Ant>().deathTimer / (2 * (1+radLvl));
+            }
+
+            // randomly choose which blurb of text to write:
+            int randText = Random.Range(0, 2);
+            if (randText == 0)  writeText("Your ants brought back a toxic water supply and all your ants lifespans are cut in half!");
+            if (randText == 1)  writeText("Your ants broke into a nuclear waste dumpsite. Your ants have reduced life expectancy");
+            if (randText == 2) writeText("Your ants brought radioactive debris to the nest. Your ants' days are numbered");
+
+        }
+        // chemical event happened
+        else if (randomNum > radEventWeight && randomNum <= (radEventWeight+chemEventWeight))
+        {
+            for (int i = 0; i < currentAnts.Count; i += pestLvl + 1)
+            {
+                currentAnts[i].gameObject.GetComponent<Ant>().deathTimer = 0;
+            }
+
+            // randomly choose which blurb of text to write:
+            int randText = Random.Range(0, 2);
+            if (randText == 0) writeText("Humans discovered your trails and sprayed PAID all over");
+            if (randText == 1) writeText("You drew too much attention to yourself and the neighborhood called pest exterminators");
+            if (randText == 2) writeText("Anti-ant propaganda has spread throughout the neighborhood. Homeowners are taking up arms");
+        }
+        // attack event happened
+        else
+        {
+            for (int i = 0; i < currentAnts.Count; i +=exoLvl + 1)
+            {
+                currentAnts[i].gameObject.GetComponent<Ant>().deathTimer = 0;
+            }
+
+            // randomly choose which blurb of text to write
+            int randText = Random.Range(0, 2);
+            if (randText == 0) writeText("Your colony was attacked by a massive ugly lizard and suffered losses");
+            if (randText == 1) writeText("Cordiceps infected your colony, causing an internal mutiny and mandatory culling");
+            if (randText == 2) writeText("Rival ants ambushed your colony! Losses were kept to a minimum but still hurt");
+        }
+    }
 }

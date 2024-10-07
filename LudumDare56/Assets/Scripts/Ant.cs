@@ -29,9 +29,9 @@ public class Ant : MonoBehaviour
     float feedingTime = 1f;
     float deliveringTime = 1f;
     float antSpeed = 2.5f;
-    float deathTimer = 20f;
+    public float deathTimer = 20f;
     public int antStrength = 1;
-    float antSize = 1f;
+    public float antSize = 1f;
 
     //state machine
     antState currentState;
@@ -196,19 +196,23 @@ public class Ant : MonoBehaviour
 
     IEnumerator DeathHandler()
     {
+        Debug.Log("death Handler reahced");
         //add the currentLocation to the Feeding Locations
         targetControl.GetComponent<FeedingHandler>().foodSources.Add(gameObject);
         if (target != null)
         {
+            Debug.Log("target wasn't null");
             if (target.tag == "ant")
                 targetControl.GetComponent<FeedingHandler>().foodSources.Add(target);
         }
+        Debug.Log("target was null");
         target = null;
         readyToTarget = false;
         readyToFeed = false;
         GameControl.GameController.activeAnts--;
         GameControl.GameController.deadAnts++;
         Debug.Log("Le ant is dead");
+        Debug.Log(currentState);
         yield return null;
     }
 
