@@ -119,15 +119,18 @@ public class EatFood : MonoBehaviour
 
     public FoodIndex eatFoodIndex(FoodIndex indexToEat)
     {
-        // remove index from all possible food Indices
-        removeFoodIndex(indexToEat);
-        // draw circle to represent this
-        createBite(indexToEat);
+        if (totalFood > 0)
+        {
+            // remove index from all possible food Indices
+            removeFoodIndex(indexToEat);
+            // draw circle to represent this
+            createBite(indexToEat);
 
-        // Debug.Log(indexToEat.getBackground());
+            // Debug.Log(indexToEat.getBackground());
 
-        // update game controller map values
-        assignMainMap();
+            // update game controller map values
+            assignMainMap();
+        }
 
         return indexToEat;
     }
