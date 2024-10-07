@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.VFX;
 
 // encapsulation class for food completion behavior
 public class CompletionObject
@@ -151,12 +153,22 @@ public class GameControl : MonoBehaviour
 
 
     //stats
-    public int basePoints = 0;
+    public int basePoints = 2;
     public int skillPoints = 0;
     public int activeAnts = 0;
     public int deadAnts = 0;
     public int foodConsumed = 0;
     public int antsConsumed = 0;
+    public int baseIndex = 0;
+
+    // ant behavior values
+    public float harvest = 1.0f;
+    public float explore = 0.0f;
+
+    // quota to reach
+    private int quota = 100;
+    public int timeChunk = 5;
+    public float globalClock = 1.0f;
 
     // list for all spawners
     public GameObject[] spawnerList;
@@ -218,6 +230,39 @@ public class GameControl : MonoBehaviour
                 skillPoints++;
             if (nuclearCompletion.fourthChkPnt()) basePoints++;
         }
+
+        // --------------------------------------------------------
+        // TO DO: Need to remove Getkeypress and put onto a button somewhere
+        // -------------------------------------------------------
+
+        // -----------------------------------------------------
+        // Time handler for quota system TO DO: IMPLEMENT SCENE CHANGES FOR LOSING QUOTA HERE
+        // -----------------------------------------------------
+        globalClock += Time.fixedDeltaTime;
+        //Debug.Log((int)globalClock);
+        //Debug.Log(timeChunk);
+        if ((int) globalClock == timeChunk)
+        {
+            Debug.Log("timechunk is working");
+            // failed to meet quota
+            if (foodConsumed + antsConsumed < quota)
+            { Debug.Log("YOU LOST!!!!"); }
+            // met quota
+            else
+            {
+                // set new quota
+                quota = quota + (baseIndex * quota);
+                // set new time limit
+                timeChunk += 30;
+            }
+        }
+
+        // --------------------------------------------------
+        // Win state Handler TO DO: IMPLEMENT SCENE CHANGES FOR WINNING GAME HERE
+        //---------------------------------------------------
+        if (checkWinState())
+            Debug.Log("YOU WON");
+
     }
 
     void Awake()
@@ -237,8 +282,17 @@ public class GameControl : MonoBehaviour
         houseCompletion = new CompletionObject();
         nuclearCompletion = new CompletionObject();
 
-        // fill spawner list via tag
         spawnerList = GameObject.FindGameObjectsWithTag("spawners");
+        spawnerList = spawnerList.OrderBy(x => x.transform.position.x).ToArray<GameObject>();
+        // fill spawner list via tag
+        //foreach (GameObject spawner in GameObject.FindGameObjectsWithTag("spawners").OrderBy(x => x.transform.position.x));
+
+        for (int i = 0; i <  spawnerList.Length; i++)
+        {
+            spawnerList[i].SetActive(false);
+        }
+        spawnerList[0].SetActive(true);
+
     }
 
     public void UpgradeInit()
@@ -306,4 +360,71 @@ public class GameControl : MonoBehaviour
     {
         return antSpawn[spawnLvl];
     }
+
+    // returns true if there are FoodIndexes in given indexed foodMap, returns false if foodMap is empty
+    public bool FetchFoodMapState(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                if (totalLeafFood > 0) return true; break;
+            case 1:
+                if (totalAppleFood > 0) return true; break;
+            case 2:
+                if (totalMeatFood > 0) return true; break;
+            case 3:
+                if (totalCarterFood > 0) return true; break;
+            case 4:
+                if (totalAtmFood > 0) return true; break;
+            case 5:
+                if (totalCarFood > 0) return true; break;
+            case 6:
+                if (totalHouseFood > 0) return true; break;
+            case 7:
+                if (totalNuclearFood > 0) return true; break;
+        }
+        
+        return false;
+    }
+
+    // function to check win status (all food objects completely consumed
+    private bool checkWinState()
+    {
+        if ((totalLeafFood == 0) && (totalAppleFood == 0) && (totalMeatFood == 0) && (totalCarterFood == 0) && (totalAtmFood == 0) && (totalCarFood == 0) && (totalHouseFood == 0) && (totalNuclearFood == 0))
+            return true;
+
+        return false;
+    }
+
+    // function for handling slider UI
+    public void SliderChanged(float actionVal)
+    {
+        harvest = 1.0f - actionVal;
+        explore = actionVal;
+    }
+    public void UpgradeBase()
+    {
+        Debug.Log("Pressed A");
+        // if player has any basePoints to spend
+        if (basePoints > 0)
+        {
+            // ensure there is a next base in the list
+            if (baseIndex <= spawnerList.Length - 1)
+            {
+                // turn off spawner, turn on new spawner
+                spawnerList[baseIndex].gameObject.SetActive(false);
+                baseIndex++;
+                spawnerList[baseIndex].gameObject.SetActive(true);
+
+                // remove basePoints
+                basePoints--;
+            }
+            else
+            {
+                Debug.Log("No More Bases to Buy!");
+            }
+        }
+        else { Debug.Log("Not Enough Base Points!"); }
+    }
+
 }
