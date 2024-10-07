@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3494240192991512000}
   - component: {fileID: 3694440279144338082}
   - component: {fileID: 6926605057876644896}
+  - component: {fileID: 7458267169475346112}
   m_Layer: 0
   m_Name: AntSpawner
   m_TagString: Untagged
@@ -71,10 +72,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 616208899
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -600272688, guid: 6a7881c6e0227fe45a8982827838d4e7, type: 3}
   m_Color: {r: 1, g: 0.98470926, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,3 +98,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435df549833a8bb4cb9367b493893bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  antPool: {fileID: 0}
+--- !u!95 &7458267169475346112
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6542540131151770308}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f571a9b7d03bfe441807d5406314b932, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

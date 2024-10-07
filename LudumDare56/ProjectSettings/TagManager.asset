@@ -11,6 +11,7 @@ TagManager:
   - slice
   - leaf
   - spawners
+  - background
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: MidGround
     uniqueID: 616208899
+    locked: 0
+  - name: Foreground
+    uniqueID: 2086577693
     locked: 0
