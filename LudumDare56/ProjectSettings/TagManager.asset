@@ -10,6 +10,7 @@ TagManager:
   - targetControl
   - slice
   - leaf
+  - spawners
   layers:
   - Default
   - TransparentFX
