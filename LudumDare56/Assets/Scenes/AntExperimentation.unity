@@ -1398,8 +1398,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ad15d3d992ae649b6fa8b3c809c1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minZoom: 0
-  maxZoom: 0
+  minZoom: 1
+  maxZoom: 100
+  speed: 5
 --- !u!1 &591862659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,6 +1896,12 @@ MonoBehaviour:
   timeChunk: 5
   globalClock: 1
   spawnerList: []
+  textfield: {fileID: 0}
+  eventProb: 0.01
+  radEventWeight: 1
+  chemEventWeight: 1
+  attkEventWeight: 1
+  triggered: 0
 --- !u!4 &828299442
 Transform:
   m_ObjectHideFlags: 0
@@ -2177,10 +2184,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1387098664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 192, y: -31.2594}
+  m_SizeDelta: {x: 344, y: 53.63}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &895187503
 MonoBehaviour:
@@ -3718,10 +3725,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1387098664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 192, y: -306.7494}
+  m_SizeDelta: {x: 344, y: 403.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1552152946
 GameObject:
@@ -3826,7 +3833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1561332250
 MonoBehaviour:
   m_ObjectHideFlags: 0
