@@ -127,21 +127,27 @@ public class GameControl : MonoBehaviour
     public int sizeLvl = 0;
     public int strengthLvl = 0;
     public int spawnLvl = 0;
+    public int exoLvl = 0;
+    public int luckLvl = 0;
+    public int pestLvl = 0;
+    public int superLvl = 0;
+    public int radLvl = 0;
 
+    //all skill levels here
     public float[] antSpeed = { 2.5f, 4f, 6f, 10f };
     public float[] antLifespan = { 30f, 45f, 60f, 90f };
     public float[] antSize = { 1f, 2f, 4f, 8f };
     public float[] antStrength = { 1f, 2f, 4f, 8f };
     public float[] antSpawn = { 4f, 3f, 2f, 1f };
+    public float[] exoSkeleton = { 0, 0.1f, 0.2f, 0.3f};
+    public float[] luckyAnts = { 0f, 0.01f, 0.02f, 0.05f};
+    public float[] pestResist = { 0f, 0.1f, 0.2f, 0.3f };
+    public float[] superAnts = { -1f, 150f, 120f, 90f};
+    public float[] radResist = { 0f, 0.1f, 0.2f, 0.3f };
 
     public List<float[]> antUpgrades;
     public List<int> antLevels;
 
-    //specializations - needs fine tuning
-    public float pestResist = 1f;
-    public float antAggression = 1f;
-    public float radResist = 1f;
-    public float exoSkel = 1f;
 
     //stats
     public int basePoints = 0;
@@ -235,7 +241,12 @@ public class GameControl : MonoBehaviour
             lifespanLvl,
             sizeLvl,
             strengthLvl,
-            spawnLvl
+            spawnLvl,
+            exoLvl,
+            luckLvl,
+            pestLvl,
+            superLvl,
+            radLvl
         };
 
         antUpgrades = new List<float[]>
@@ -244,7 +255,12 @@ public class GameControl : MonoBehaviour
             antLifespan,
             antSize,
             antStrength,
-            antSpawn
+            antSpawn,
+            exoSkeleton,
+            luckyAnts,
+            pestResist,
+            superAnts,
+            radResist
         };
     }
 
@@ -255,6 +271,11 @@ public class GameControl : MonoBehaviour
         sizeLvl = antLevels[2];
         strengthLvl = antLevels[3];
         spawnLvl = antLevels[4];
+        exoLvl = antLevels[5];
+        luckLvl = antLevels[6];
+        pestLvl = antLevels[7];
+        superLvl = antLevels[8];
+        radLvl = antLevels[9];
     }
 
     public float GetSpeed()

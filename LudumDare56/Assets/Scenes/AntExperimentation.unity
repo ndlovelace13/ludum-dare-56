@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 7597374}
   - component: {fileID: 7597376}
   - component: {fileID: 7597375}
+  - component: {fileID: 7597377}
   m_Layer: 5
   m_Name: Wedge (1)
   m_TagString: Untagged
@@ -198,6 +199,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7597373}
   m_CullTransparentMesh: 1
+--- !u!114 &7597377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7597373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: bc14a101e6a033c45b6533fff784f645, type: 3}
+  alternateSprite: {fileID: 21300000, guid: e6dc8f6f46c43c04c81011d933fa6b22, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &71462701
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +270,7 @@ GameObject:
   - component: {fileID: 72117012}
   - component: {fileID: 72117014}
   - component: {fileID: 72117013}
+  - component: {fileID: 72117015}
   m_Layer: 5
   m_Name: Wedge (2)
   m_TagString: Untagged
@@ -318,6 +335,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72117011}
   m_CullTransparentMesh: 1
+--- !u!114 &72117015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72117011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: ada7d92dd798db94cb2307548f576e57, type: 3}
+  alternateSprite: {fileID: 21300000, guid: f1ddadda86af6f645b6d4fbc9ab43451, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &90452159
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Mutations Menu
+  m_text: Basic Mutations
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -463,6 +495,7 @@ GameObject:
   - component: {fileID: 148371509}
   - component: {fileID: 148371511}
   - component: {fileID: 148371510}
+  - component: {fileID: 148371512}
   m_Layer: 5
   m_Name: Wedge (2)
   m_TagString: Untagged
@@ -527,6 +560,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148371508}
   m_CullTransparentMesh: 1
+--- !u!114 &148371512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148371508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: 3b70491c980b2e342847af28922a1ea4, type: 3}
+  alternateSprite: {fileID: 21300000, guid: f1c77b73b324a5a47bfde0e094b4d7ba, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &228705029
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +729,7 @@ GameObject:
   - component: {fileID: 316044331}
   - component: {fileID: 316044333}
   - component: {fileID: 316044332}
+  - component: {fileID: 316044334}
   m_Layer: 5
   m_Name: Wedge (2)
   m_TagString: Untagged
@@ -745,6 +794,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 316044330}
   m_CullTransparentMesh: 1
+--- !u!114 &316044334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316044330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: 909b5681305d77141bc293ac685de102, type: 3}
+  alternateSprite: {fileID: 21300000, guid: 81c22cf5b3b5b5945be34490ef898421, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &386966753
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +820,7 @@ GameObject:
   - component: {fileID: 386966754}
   - component: {fileID: 386966756}
   - component: {fileID: 386966755}
+  - component: {fileID: 386966757}
   m_Layer: 5
   m_Name: Wedge (1)
   m_TagString: Untagged
@@ -820,6 +885,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386966753}
   m_CullTransparentMesh: 1
+--- !u!114 &386966757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386966753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: fd1fc6bc5c556594cae2dc8f6f9c84cd, type: 3}
+  alternateSprite: {fileID: 21300000, guid: cecd9b5b0f32dbe468be5e09136eb6a8, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &410840844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1453,139 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &600094142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 600094143}
+  - component: {fileID: 600094146}
+  - component: {fileID: 600094145}
+  - component: {fileID: 600094144}
+  m_Layer: 5
+  m_Name: MutationButton (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &600094143
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600094142}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 991734314}
+  m_Father: {fileID: 1413934418}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -50, y: 50}
+  m_SizeDelta: {x: 300, y: 100}
+  m_Pivot: {x: 1, y: 0}
+--- !u!114 &600094144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600094142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 600094145}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1413934419}
+        m_TargetAssemblyTypeName: MutationMenu, Assembly-CSharp
+        m_MethodName: Alternate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &600094145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600094142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &600094146
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600094142}
+  m_CullTransparentMesh: 1
 --- !u!1 &686213444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1643,7 @@ GameObject:
   - component: {fileID: 746029504}
   - component: {fileID: 746029506}
   - component: {fileID: 746029505}
+  - component: {fileID: 746029507}
   m_Layer: 5
   m_Name: Wedge (2)
   m_TagString: Untagged
@@ -1494,6 +1708,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746029503}
   m_CullTransparentMesh: 1
+--- !u!114 &746029507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746029503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: 7ff9af89b9ec6e646b0721d7b1936d85, type: 3}
+  alternateSprite: {fileID: 21300000, guid: 5426c257131bd594ab04d73cada3fd6e, type: 3}
+  menu: {fileID: 1413934419}
 --- !u!1 &797894329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,11 +1798,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d001d9ad2f5f2134682701ad59688fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalLeafFood: 0
+  totalAppleFood: 0
+  totalMeatFood: 0
+  totalCarterFood: 0
+  totalAtmFood: 0
+  totalCarFood: 0
+  totalHouseFood: 0
+  totalNuclearFood: 0
+  initialLeafFood: 0
+  initialAppleFood: 0
+  initialMeatFood: 0
+  initialCarterFood: 0
+  initialAtmFood: 0
+  initialCarFood: 0
+  initialHouseFood: 0
+  initialNuclearFood: 0
+  superCooldown: -1
   speedLvl: 0
   lifespanLvl: 0
   sizeLvl: 0
   strengthLvl: 0
   spawnLvl: 0
+  exoLvl: 0
+  luckLvl: 0
+  pestLvl: 0
+  superLvl: 0
+  radLvl: 0
   antSpeed:
   - 2.5
   - 4
@@ -1599,11 +1850,25 @@ MonoBehaviour:
   - 3
   - 2
   - 1
+  exoSkeleton:
+  - 0
+  - 0.1
+  - 0.2
+  - 0.3
+  luckyAnts:
+  - 0
+  - 0.01
+  - 0.02
+  - 0.05
+  pestResist: []
+  superAnts:
+  - -1
+  - 150
+  - 120
+  - 90
+  radResist: []
   antLevels: 
-  pestResist: 1
-  antAggression: 1
-  radResist: 1
-  exoSkel: 1
+  basePoints: 0
   skillPoints: 5
   activeAnts: 0
   deadAnts: 0
@@ -1635,6 +1900,7 @@ GameObject:
   - component: {fileID: 863148810}
   - component: {fileID: 863148812}
   - component: {fileID: 863148811}
+  - component: {fileID: 863148813}
   m_Layer: 5
   m_Name: Wedge (1)
   m_TagString: Untagged
@@ -1699,6 +1965,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863148809}
   m_CullTransparentMesh: 1
+--- !u!114 &863148813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863148809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: 2dd400ae0257ecd469efff08a13fae76, type: 3}
+  alternateSprite: {fileID: 21300000, guid: a4c77ec8811ef0c49a0eae5d00b88b30, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &889358678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,6 +2269,7 @@ GameObject:
   - component: {fileID: 961518118}
   - component: {fileID: 961518120}
   - component: {fileID: 961518119}
+  - component: {fileID: 961518121}
   m_Layer: 5
   m_Name: Wedge
   m_TagString: Untagged
@@ -2052,6 +2334,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961518117}
   m_CullTransparentMesh: 1
+--- !u!114 &961518121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961518117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: 9c144599bda915c4ca7df0d060ff8682, type: 3}
+  alternateSprite: {fileID: 21300000, guid: 0b5787f0a4d64984bb1181b44b54c8b1, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &988249733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2360,7 @@ GameObject:
   - component: {fileID: 988249734}
   - component: {fileID: 988249736}
   - component: {fileID: 988249735}
+  - component: {fileID: 988249737}
   m_Layer: 5
   m_Name: Wedge (1)
   m_TagString: Untagged
@@ -2126,6 +2424,155 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988249733}
+  m_CullTransparentMesh: 1
+--- !u!114 &988249737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988249733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: c7933e80c62ed064e8845ac4a473326d, type: 3}
+  alternateSprite: {fileID: 21300000, guid: b3a6262f5b07fd64793bd16bbb3a527e, type: 3}
+  menu: {fileID: 0}
+--- !u!1 &991734313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 991734314}
+  - component: {fileID: 991734316}
+  - component: {fileID: 991734315}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &991734314
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991734313}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 600094143}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 2.5349731}
+  m_SizeDelta: {x: -35.478, y: -30.41}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &991734315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991734313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Switch Mutations
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 35.05
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &991734316
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991734313}
   m_CullTransparentMesh: 1
 --- !u!1 &1315245073
 GameObject:
@@ -2271,6 +2718,7 @@ GameObject:
   - component: {fileID: 1349715230}
   - component: {fileID: 1349715232}
   - component: {fileID: 1349715231}
+  - component: {fileID: 1349715233}
   m_Layer: 5
   m_Name: Wedge
   m_TagString: Untagged
@@ -2335,6 +2783,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349715229}
   m_CullTransparentMesh: 1
+--- !u!114 &1349715233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349715229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: 9e91f4be1fac4c94986c5ed3ebe49ae5, type: 3}
+  alternateSprite: {fileID: 21300000, guid: 2ebbcce696d27fe4ba605fc534146fb2, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &1365294629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2346,6 +2809,7 @@ GameObject:
   - component: {fileID: 1365294630}
   - component: {fileID: 1365294632}
   - component: {fileID: 1365294631}
+  - component: {fileID: 1365294633}
   m_Layer: 5
   m_Name: Wedge
   m_TagString: Untagged
@@ -2410,6 +2874,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365294629}
   m_CullTransparentMesh: 1
+--- !u!114 &1365294633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365294629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: cb391f10dc251e94bb0c0989a875a337, type: 3}
+  alternateSprite: {fileID: 21300000, guid: 11b7fb57cd4686545aa97ae3105b423e, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &1387098663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,6 +3209,7 @@ RectTransform:
   - {fileID: 90452160}
   - {fileID: 556406599}
   - {fileID: 1929646072}
+  - {fileID: 600094143}
   m_Father: {fileID: 410840845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2750,6 +3230,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointText: {fileID: 556406600}
+  titleText: {fileID: 90452161}
+  alternateTrigger: {fileID: 0}
+  background: {fileID: 571817039}
+  basicSkills: {fileID: 21300000, guid: 3b8c40d5502629d4494eb3c945109806, type: 3}
+  secondarySkills: {fileID: 21300000, guid: 8fb1704539b735f44983182c55a3ac01, type: 3}
+  basic: 1
 --- !u!1 &1421277824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,6 +3247,7 @@ GameObject:
   - component: {fileID: 1421277825}
   - component: {fileID: 1421277827}
   - component: {fileID: 1421277826}
+  - component: {fileID: 1421277828}
   m_Layer: 5
   m_Name: Wedge
   m_TagString: Untagged
@@ -2825,6 +3312,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421277824}
   m_CullTransparentMesh: 1
+--- !u!114 &1421277828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421277824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: f7e3424af12840941990c642087ac186, type: 3}
+  alternateSprite: {fileID: 21300000, guid: dcd60c6e7b7396040b96406c3f454bdb, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &1441111389
 GameObject:
   m_ObjectHideFlags: 0
@@ -3380,6 +3882,7 @@ GameObject:
   - component: {fileID: 1826278001}
   - component: {fileID: 1826278003}
   - component: {fileID: 1826278002}
+  - component: {fileID: 1826278004}
   m_Layer: 5
   m_Name: Wedge (2)
   m_TagString: Untagged
@@ -3444,6 +3947,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826278000}
   m_CullTransparentMesh: 1
+--- !u!114 &1826278004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826278000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: 44e186f9b4803f04ea6b872ab3f7b0fa, type: 3}
+  alternateSprite: {fileID: 21300000, guid: eacf0f8aea26562438160f538f0291e0, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &1897676194
 GameObject:
   m_ObjectHideFlags: 0
@@ -3455,6 +3973,7 @@ GameObject:
   - component: {fileID: 1897676195}
   - component: {fileID: 1897676197}
   - component: {fileID: 1897676196}
+  - component: {fileID: 1897676198}
   m_Layer: 5
   m_Name: Wedge
   m_TagString: Untagged
@@ -3519,6 +4038,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897676194}
   m_CullTransparentMesh: 1
+--- !u!114 &1897676198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897676194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: d1eed0b6cf37ccb4a8105740d3458b97, type: 3}
+  alternateSprite: {fileID: 21300000, guid: a549b8066a2422148a7c0b404bff8829, type: 3}
+  menu: {fileID: 0}
 --- !u!1 &1929646071
 GameObject:
   m_ObjectHideFlags: 0
@@ -3805,6 +4339,7 @@ GameObject:
   - component: {fileID: 2035155907}
   - component: {fileID: 2035155909}
   - component: {fileID: 2035155908}
+  - component: {fileID: 2035155910}
   m_Layer: 5
   m_Name: Wedge (1)
   m_TagString: Untagged
@@ -3869,6 +4404,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035155906}
   m_CullTransparentMesh: 1
+--- !u!114 &2035155910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035155906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238cf65832c8394bb0761e14b9e54f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicSprite: {fileID: 21300000, guid: e1f4b3d7feaa70f49b74100ee2196a76, type: 3}
+  alternateSprite: {fileID: 21300000, guid: 4eca28a946f597e458b6ed911f99a238, type: 3}
+  menu: {fileID: 0}
 --- !u!1001 &458549730150630570
 PrefabInstance:
   m_ObjectHideFlags: 0
