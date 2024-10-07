@@ -5,7 +5,7 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     //associated index goes here
-
+    public int foodamt = 0;
 
     // Start is called before the first frame update
     void Start()

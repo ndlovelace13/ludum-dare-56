@@ -30,7 +30,7 @@ public class Ant : MonoBehaviour
     float deliveringTime = 1f;
     float antSpeed = 2.5f;
     float deathTimer = 20f;
-    float antStrength = 1f;
+    public int antStrength = 1;
     float antSize = 1f;
 
     //state machine
@@ -78,7 +78,7 @@ public class Ant : MonoBehaviour
         //Load in current vals from GameControl
         antSpeed = GameControl.GameController.GetSpeed();
         deathTimer = GameControl.GameController.GetLifespan();
-        antStrength = GameControl.GameController.GetStrength();
+        antStrength = (int) GameControl.GameController.GetStrength();
         antSize = GameControl.GameController.GetSize();
 
         //do some random number calc to make sure ants feel individual
@@ -229,9 +229,11 @@ public class Ant : MonoBehaviour
                 bool result = food.GetComponent<Ant>().DeliverFood();
                 GameControl.GameController.deadAnts--;
                 GameControl.GameController.antsConsumed++;
+                GameControl.GameController.foodConsumed += food.GetComponent<Ant>().antStrength;
             }
             //TODO - make sure to take the food's strength here
-            GameControl.GameController.foodConsumed++;
+            if (food.tag != "ant")
+                GameControl.GameController.foodConsumed += food.GetComponent<Food>().foodamt;
             food.transform.parent = null;
             food.SetActive(false);
             food = null;

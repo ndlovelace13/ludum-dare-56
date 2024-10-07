@@ -36,6 +36,7 @@ public class PartitionSreen : MonoBehaviour
     private int[] countColors = new int[200];
     public FoodIndex[,] foodMap;
     private List<FoodIndex> neighbors = new List<FoodIndex>();
+    private int thisTotalFood;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,8 +56,8 @@ public class PartitionSreen : MonoBehaviour
             for (int u = 0; u < rows; u++)
                 foodMap[p, u] = new FoodIndex();
 
-        float offsetx = spriteRenderer.transform.localScale.x;
-        float offsety = spriteRenderer.transform.localScale.y;
+        float offsetx = spriteRenderer.transform.position.x;
+        float offsety = spriteRenderer.transform.position.y;
 
 
         SpriteRenderer renderer;
@@ -89,10 +90,10 @@ public class PartitionSreen : MonoBehaviour
 
                     monkey = renderer.sprite;
 
-                    int x = (int)Mathf.FloorToInt((point.x - offsetx) * monkey.pixelsPerUnit);
-                    int y = (int)Mathf.FloorToInt((point.y - offsety)* monkey.pixelsPerUnit);
+                    int x = (int)Mathf.FloorToInt(((point.x - offsetx) / spriteRenderer.transform.localScale.x) * monkey.pixelsPerUnit);
+                    int y = (int)Mathf.FloorToInt(((point.y - offsety) / spriteRenderer.transform.localScale.y) * monkey.pixelsPerUnit);
 
-                    Debug.Log(x + " " + y);
+                    //Debug.Log("Pixels: " + x + " " + y);
 
 
                     hitColor = monkey.texture.GetPixel(x, y);    
@@ -116,14 +117,15 @@ public class PartitionSreen : MonoBehaviour
                 {
                     // manually set alpha to ensure correct color accuracy
                     hitColor.a = 1;
-                    Debug.Log(hitColor);
+                    //Debug.Log(hitColor);
                     // create actual index object at current index with an empty neighbors list and tentative canBeEaten value
-                    foodMap[i, j] = new FoodIndex(gridMap[i, j], neighbors, hitColor, Color.blue, FindStrength(hitColor), false, false);
+                    foodMap[i, j] = new FoodIndex(gridMap[i, j], neighbors, hitColor, FindStrength(hitColor), false, true);
+                    thisTotalFood++;
 
                 }
                 else
                 {
-                    foodMap[i, j] = new FoodIndex(gridMap[i, j], neighbors, hitColor, Color.blue, -1, true, false);
+                    foodMap[i, j] = new FoodIndex(gridMap[i, j], neighbors, hitColor, -1, true, true);
                 }
             }
             #endregion
@@ -171,14 +173,12 @@ public class PartitionSreen : MonoBehaviour
                 // check if food exists at this index
                 if (foodMap[i, j].getIsOccupied() == false)
                 {
-                    neighbors = new List<FoodIndex>();
                     // clear neighbors and populate list
-                    PopulateNeighbors(i, j);
-                    foodMap[i, j].setNeighbors(neighbors);
-                    Debug.Log(foodMap[i, j].getNeighbors().Count);
+                    foodMap[i, j].setNeighbors(PopulateNeighbors(i, j));
+                    //Debug.Log(foodMap[i, j].getNeighbors().Count);
                     // if neighbor count of node isn't 4, means that it isn't completely landlocked, therefore
                     // it can be eaten
-                    if (neighbors.Count == 4)
+                    if (foodMap[i,j].getNeighbors().Count == 4)
                     {
                         foodMap[i, j].setHasNeighbor(false);
                     }
@@ -192,26 +192,20 @@ public class PartitionSreen : MonoBehaviour
         setGlobalMap();
         // printing function (non relevant)
         // prints amt of found colors
-        for (int z = 0; z < foundColors.Count; z++)
-        {
-            Debug.Log(foundColors[z] + " Count: " + countColors[z]);
-        }
-
         // prints generated food map from given sprite and gridmap
+        /*
         for (int l = 0; l < foodMap.GetLength(0); l++)
         {
             for (int n = 0; n < foodMap.GetLength(1); n++)
             {
-                //Debug.Log(foodMap[l, n].getPos());
-            }
-        }
+                Debug.Log(foodMap[l, n].getStrength());
+            
+        }*/
 
-        // print generated GamecontrolMap
-        
-        for (int q = 0; q < GameControl.GameController.leafMap.GetLength(0); q++)
-            for (int r = 0; r < GameControl.GameController.leafMap.GetLength(1); r++)
-                Debug.Log(GameControl.GameController.leafMap[q, r].getBackground());
-
+        // once done, remove sprite renderer
+        spriteRenderer.enabled = false;
+        // set flag to finish
+        GetComponentInChildren<EatFood>().assignFoodMap();
     }   // end of start()
 
     // helper function to take a Color object and return an integer
@@ -229,52 +223,53 @@ public class PartitionSreen : MonoBehaviour
     }
 
     // helper function to populate neighbors list when given an index i and j (rows and cols)
-    private void PopulateNeighbors(int i, int j)
+    private List<FoodIndex> PopulateNeighbors(int i, int j)
     {
+        List<FoodIndex> neighbors = new List<FoodIndex>();
         // base case, first node can only check South and East (North West Corner)
         if (i == 0 && j == 0)
         {
-            Debug.Log("North West Corner");
+            //Debug.Log("North West Corner");
             if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i+1, j]);
             if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
-            return;
+            return neighbors;
         }
         // edge case for at the very end of the list (can only check North and West) (South East Corner)
         if ((i == foodMap.GetLength(0) - 1) && (j == foodMap.GetLength(1) - 1))
         {
-            Debug.Log("South East Corner");
+            //Debug.Log("South East Corner");
             if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i-1, j]);
             if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j-1]);
-            return;
+            return neighbors;
         }
         // edge case for South West Corner. Can only check North and East
         if (i == 0 && j == foodMap.GetLength(1) - 1)
         {
-            Debug.Log("South West Corner");
+            //Debug.Log("South West Corner");
             if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j - 1]);
             if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i+1, j]);
-            return;
+            return neighbors;
         }
         // edge case for North East Corner Can only check South and West
         if (i == foodMap.GetLength(0) - 1 && j == 0)
         {
-            Debug.Log("North East Coner");
+            //Debug.Log("North East Coner");
             if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
             if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
-            return;
+            return neighbors;
         }
         // edge case if we are at the end of the very East side of the list, and NOT at corners
         if (i == foodMap.GetLength(0) - 1 && j > 0 && j < foodMap.GetLength(1) - 1)
         {
-            Debug.Log("East Side");
+            //Debug.Log("East Side");
             // if i and j are both positive here, can check South, West, North
             if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i-1, j]);
@@ -282,12 +277,12 @@ public class PartitionSreen : MonoBehaviour
                 neighbors.Add(foodMap[i, j-1]);
             if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
-            return;
+            return neighbors;
         }
         // edge case if we are at the very South side of the list and NOT at corners
         if (i > 0 && i < foodMap.GetLength(0) - 1 && j == foodMap.GetLength(1) - 1)
         {
-            Debug.Log("South Side");
+            //Debug.Log("South Side");
             // i and j both positive, can check North, East, West
             if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
@@ -295,13 +290,13 @@ public class PartitionSreen : MonoBehaviour
                 neighbors.Add(foodMap[i + 1, j]);
             if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j-1]);
-            return;
+            return neighbors;
             
         }
         // edge case if we are at the very North side of list and NOT at corners
         if (i > 0 && i < foodMap.GetLength(0) - 1 && j == 0)
         {
-            Debug.Log("North Side");
+            //Debug.Log("North Side");
             // j is 0, i is positive, can check South, East, West
             if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
@@ -309,12 +304,12 @@ public class PartitionSreen : MonoBehaviour
                 neighbors.Add(foodMap[i + 1, j]);
             if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
-            return;
+            return neighbors;
         }
         // edge case if we are at the very West side of list and NOT at corners
         if (i == 0 && j > 0 && j < foodMap.GetLength(1) - 1)
         {
-            Debug.Log("West Side");
+            //Debug.Log("West Side");
             // if i is 0, j is positive, can check South, North, East
             if (!foodMap[i + 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i+1,j]);  
@@ -322,12 +317,12 @@ public class PartitionSreen : MonoBehaviour
                 neighbors.Add(foodMap[i, j+1]);
             if (!foodMap[i, j - 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j - 1]);
-            return;
+            return neighbors;
         }
         // all other normal cases where no edge or border (the body of graph)
         if (i > 0 && j > 0 && i < foodMap.GetLength(0) - 1 && j < foodMap.GetLength(1) - 1)
         {
-            Debug.Log("Body");
+            //Debug.Log("Body");
             if (!foodMap[i - 1, j].getIsOccupied())
                 neighbors.Add(foodMap[i - 1, j]);
             if (!foodMap[i, j - 1].getIsOccupied())
@@ -336,8 +331,9 @@ public class PartitionSreen : MonoBehaviour
                 neighbors.Add(foodMap[i + 1, j]);
             if (!foodMap[i, j + 1].getIsOccupied())
                 neighbors.Add(foodMap[i, j + 1]);
-            return;
+            return neighbors;
         }
+        return neighbors;
     }
 
     // helper function to set gamecontroller variables 
@@ -347,21 +343,44 @@ public class PartitionSreen : MonoBehaviour
         {
             case 0:
                 GameControl.GameController.leafMap = (foodMap);
+                GameControl.GameController.initialLeafFood = thisTotalFood;
+                GameControl.GameController.totalLeafFood = thisTotalFood;
                 break;
             case 1:
-                GameControl.GameController.appleMap = foodMap; break;
+                GameControl.GameController.appleMap = foodMap;
+                GameControl.GameController.initialAppleFood = thisTotalFood;
+                GameControl.GameController.totalAppleFood = thisTotalFood;
+                break;
             case 2:
-                GameControl.GameController.meatMap = foodMap; break;
+                GameControl.GameController.meatMap = foodMap;
+                GameControl.GameController.initialMeatFood = thisTotalFood;
+                GameControl.GameController.totalMeatFood = thisTotalFood;
+                break;
             case 3:
-                GameControl.GameController.carterMap = foodMap; break;
+                GameControl.GameController.carterMap = foodMap; 
+                GameControl.GameController.initialCarterFood = thisTotalFood;
+                GameControl.GameController.totalCarterFood = thisTotalFood;
+                break;
             case 4:
-                GameControl.GameController.atmMap = foodMap; break;
+                GameControl.GameController.atmMap = foodMap;
+                GameControl.GameController.initialAtmFood = thisTotalFood;
+                GameControl.GameController.totalAtmFood = thisTotalFood;
+                break;
             case 5:
-                GameControl.GameController.carMap = foodMap; break;
+                GameControl.GameController.carMap = foodMap;
+                GameControl.GameController.initialCarFood = thisTotalFood;
+                GameControl.GameController.totalCarFood = thisTotalFood;
+                break;
             case 6:
-                GameControl.GameController.houseMap = foodMap; break;
+                GameControl.GameController.houseMap = foodMap;
+                GameControl.GameController.initialHouseFood = thisTotalFood;
+                GameControl.GameController.totalHouseFood = thisTotalFood;
+                break;
             case 7:
-                GameControl.GameController.nuclearMap = foodMap; break;
+                GameControl.GameController.nuclearMap = foodMap; 
+                GameControl.GameController.initialNuclearFood = thisTotalFood;
+                GameControl.GameController.totalNuclearFood = thisTotalFood;
+                break;
         }
     }
     

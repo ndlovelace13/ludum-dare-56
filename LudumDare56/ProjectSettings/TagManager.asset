@@ -9,6 +9,7 @@ TagManager:
   - ant
   - targetControl
   - slice
+  - leaf
   layers:
   - Default
   - TransparentFX
@@ -45,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: MidGround
+    uniqueID: 616208899
     locked: 0

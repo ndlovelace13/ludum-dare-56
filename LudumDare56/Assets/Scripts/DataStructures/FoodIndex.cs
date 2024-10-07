@@ -10,7 +10,6 @@ public class FoodIndex
     private Vector2 pos;
     private List<FoodIndex> neighbors;
     private Color background;
-    private Color foreground;
     private int strength;
 
 
@@ -20,19 +19,17 @@ public class FoodIndex
         pos = Vector2.zero;
         neighbors = new List<FoodIndex>();
         background = Color.clear;
-        foreground = Color.clear;
         strength = -1;
         isOccupied = false;
         hasNeighbor = false;
     }
 
     // constructor
-    public FoodIndex(Vector2 pos, List<FoodIndex> neighbors, Color background, Color foreground, int strength, bool isOccupied, bool hasNeighbor)
+    public FoodIndex(Vector2 pos, List<FoodIndex> neighbors, Color background, int strength, bool isOccupied, bool hasNeighbor)
     {
         this.pos = pos;
         this.neighbors = neighbors;
         this.background = background;
-        this.foreground = foreground;
         this.strength = strength;
         this.isOccupied = isOccupied;
         this.hasNeighbor = hasNeighbor;
@@ -47,7 +44,6 @@ public class FoodIndex
     public Vector2 getPos() { return pos; }
     public List<FoodIndex> getNeighbors() {  return neighbors; }
     public Color getBackground() { return background; }
-    public Color getForeground() { return foreground; }
     public int getStrength() { return strength; }
     public bool getIsOccupied() { return isOccupied; }
     public bool getHasNeighbor() {  return hasNeighbor; }
@@ -70,10 +66,6 @@ public class FoodIndex
         public void setBackground(Color background)
         {
             this.background = background;
-        }
-        public void setForeground(Color foreground)
-        {
-            this.foreground = foreground;
         }
         public void setNeighbors(List<FoodIndex> neighbors)
         {
