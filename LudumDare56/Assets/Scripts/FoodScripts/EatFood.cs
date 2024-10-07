@@ -114,7 +114,7 @@ public class EatFood : MonoBehaviour
                 GameControl.GameController.totalNuclearFood = totalFood;
                 break;
         }
-        Debug.Log("Total Food: " + totalFood);
+        // Debug.Log("Total Food: " + totalFood);
     }
 
     public FoodIndex eatFoodIndex(FoodIndex indexToEat)
@@ -124,7 +124,7 @@ public class EatFood : MonoBehaviour
         // draw circle to represent this
         createBite(indexToEat);
 
-        Debug.Log(indexToEat.getBackground());
+        // Debug.Log(indexToEat.getBackground());
 
         // update game controller map values
         assignMainMap();
