@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
+
 using UnityEngine.SceneManagement;
 
 public class EndBehavior : MonoBehaviour
@@ -16,23 +17,28 @@ public class EndBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameControl.GameController)
+        if (GameControl.GameController.gameWin == false)
         {
-            message.text = "YOUR COLONY HAD WORLD ENDING CONSEQUENCES!";
+            message.text = "YOUR COLONY WAS ERADICATED";
         }
         else
         {
-            message.text = "YOUR COLONY WAS ELIMINATED!";
-        }
+            message.text = "YOUR COLONY ENDED THE WORLD!";
+        }   
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
     }
 
-    public void ReturnHome()
+    public void MainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
 
     public void PlayAgain()
     {
+        GameControl.GameController.gameWin = false;
+        GameControl.GameController.gameOver = false;
         SceneManager.LoadScene("Gameplay");
     }
 }

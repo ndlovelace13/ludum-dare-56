@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor.EventSystems;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
@@ -163,6 +163,7 @@ public class GameControl : MonoBehaviour
     //stats
     public int basePoints = 2;
     public int skillPoints = 0;
+    public int totalSkills = 0;
     public int activeAnts = 0;
     public int deadAnts = 0;
     public int foodConsumed = 0;
@@ -174,9 +175,12 @@ public class GameControl : MonoBehaviour
     public float explore = 0.0f;
 
     // quota to reach
-    private int quota = 20;
+    public int quota = 5;
     public int timeChunk = 20;
     public float globalClock = 1.0f;
+
+    public bool gameWin = false;
+    public bool gameOver = false;
 
     // list for all spawners
     public GameObject[] spawnerList;
@@ -271,15 +275,19 @@ public class GameControl : MonoBehaviour
         {
             Debug.Log("timechunk is working");
             // failed to meet quota
-            if (foodConsumed + antsConsumed < quota)
-            { Debug.Log("YOU LOST!!!!"); loseSource.Play(); }
+            if (foodConsumed < quota && !gameOver)
+            { Debug.Log("YOU LOST!!!!"); loseSource.Play();
+                SceneManager.LoadScene("EndScreen");
+                gameOver = true;
+                }
             // met quota
             else
             {
                 // set new quota
-                quota = quota + ((baseIndex + 1) * quota);
+                quota = (int)(quota + ((totalSkills + 1 + globalClock / 60) * 5 ));
+                Debug.Log("New Quota: " + quota);
                 // set new time limit
-                timeChunk += 20;
+                timeChunk += 30;
             }
 
             // run code for checking if event will occur
@@ -295,10 +303,13 @@ public class GameControl : MonoBehaviour
         // --------------------------------------------------
         // Win state Handler TO DO: IMPLEMENT SCENE CHANGES FOR WINNING GAME HERE
         //---------------------------------------------------
-        if (checkWinState())
+        if (checkWinState() && !gameOver)
         {
             winSource.Play();
             Debug.Log("YOU WON");
+            gameWin = true;
+            gameOver = true;
+            SceneManager.LoadScene("EndScreen");
         }
 
     }

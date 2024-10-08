@@ -128,6 +128,10 @@ public class FeedingLocation : MonoBehaviour
 
                             // assign food value 
                             // tie in the luck based thing here
+                            int luckInt = Random.Range(0, 3);
+                            if ((luckInt >= 0) && (luckInt < GameControl.GameController.luckLvl))
+                                    indivFood *= (GameControl.GameController.luckLvl + 1);
+
                             currentFood.GetComponent<Food>().foodamt = indivFood;
 
                             currentFood.SetActive(true);
