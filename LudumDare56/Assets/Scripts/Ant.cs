@@ -62,7 +62,9 @@ public class Ant : MonoBehaviour
     public void Activate()
     {
         isActive = true;
-        transform.localScale = Vector3.one;
+        Vector3 newScale = transform.localScale;
+        newScale.x = Mathf.Abs(newScale.x);
+        transform.localScale = newScale;
         animator = GetComponent<Animator>();
         targetControl = GameObject.FindWithTag("targetControl");
         currentState = antState.Birthed;
@@ -231,6 +233,7 @@ public class Ant : MonoBehaviour
     {
         foodInput.transform.SetParent(transform, false);
         foodInput.transform.localPosition = Vector3.up;
+        foodInput.transform.localScale = Vector3.one;
         food = foodInput;
         target = home;
     }

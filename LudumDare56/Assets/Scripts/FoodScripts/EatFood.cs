@@ -9,6 +9,7 @@ public class EatFood : MonoBehaviour
     [SerializeField] private int mapIndex;
     [SerializeField] private Sprite circle;
     [SerializeField] private float cellSize;
+    [SerializeField] GameObject bite;
     private SpriteRenderer spriteRenderer;
     public FoodIndex[,] foodMap = null;
     public int appliedStrength;
@@ -133,10 +134,10 @@ public class EatFood : MonoBehaviour
     public void createBite(FoodIndex food)
     {
         // draw circle
-        GameObject fillCircle = new GameObject();
-        fillCircle.AddComponent<SpriteRenderer>();
-        fillCircle.GetComponent<SpriteRenderer>().sprite = circle;
-        fillCircle.GetComponent<SpriteRenderer>().color = new Color(0.38f, 0.55f, 0.76f);
+        GameObject fillCircle = Instantiate(bite);
+        //fillCircle.AddComponent<SpriteRenderer>();
+        //fillCircle.GetComponent<SpriteRenderer>().sprite = circle;
+        //fillCircle.GetComponent<SpriteRenderer>().color = new Color(0.38f, 0.55f, 0.76f);
         fillCircle.GetComponent<SpriteRenderer>().sortingLayerName = "MidGround";
         //Debug.Log("Eating at: " + availableFood[randInd].getPos());
         fillCircle.transform.position = new Vector3(food.getPos().x, food.getPos().y, 0);

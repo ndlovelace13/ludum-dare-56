@@ -39,7 +39,7 @@ public class CameraControl : MonoBehaviour
             if (Input.mouseScrollDelta != Vector2.zero)
             {
                 if (camera.orthographicSize > minZoom && camera.orthographicSize < maxZoom)
-                    camera.orthographicSize += speed * camera.orthographicSize * Time.deltaTime * Input.mouseScrollDelta.y;
+                    camera.orthographicSize += speed * camera.orthographicSize * Time.deltaTime * -Input.mouseScrollDelta.y;
                 else if (camera.orthographicSize >= maxZoom && Input.mouseScrollDelta.y < 0)
                     camera.orthographicSize -= speed * camera.orthographicSize * Time.deltaTime;
                 else if (camera.orthographicSize <= minZoom && Input.mouseScrollDelta.y > 0)

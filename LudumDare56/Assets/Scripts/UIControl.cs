@@ -9,6 +9,7 @@ public class UIControl : MonoBehaviour
     [SerializeField] GameObject MutationsTrigger;
     [SerializeField] GameObject MutationsMenu;
     [SerializeField] TMP_Text statsField;
+    [SerializeField] TMP_Text currentQuota;
     bool mutationsActive = false;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,8 @@ public class UIControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentQuota.text = "Current Quota: " + GameControl.GameController.quota + 
+            "\nTime Remaining: " + string.Format("{0:0.00}", GameControl.GameController.timeChunk - GameControl.GameController.globalClock);
         statsField.text = "Current Living Ants: " + GameControl.GameController.activeAnts +
             "\nDead Ants: " + GameControl.GameController.deadAnts +
             "\nFood Consumed: " + GameControl.GameController.foodConsumed +
@@ -28,6 +31,9 @@ public class UIControl : MonoBehaviour
             "\nSize: " + GameControl.GameController.GetSize() +
             "\nStrength: " + GameControl.GameController.GetStrength() +
             "\nBirthrate: " + GameControl.GameController.GetSpawn() + " sec cooldown";
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+            MutationDeactivate();
     }
 
     public void MutationActivate()

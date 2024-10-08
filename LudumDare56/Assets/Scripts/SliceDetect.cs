@@ -85,6 +85,7 @@ public class SliceDetect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             audioSource.Play();
             GameControl.GameController.antLevels[powerIndex]++;
             GameControl.GameController.skillPoints--;
+            GameControl.GameController.totalSkills++;
             GameControl.GameController.UpgradeUpdate();
             Activate(powerIndex);
         }
