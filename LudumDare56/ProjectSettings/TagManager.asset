@@ -12,6 +12,7 @@ TagManager:
   - leaf
   - spawners
   - background
+  - scrollText
   layers:
   - Default
   - TransparentFX
