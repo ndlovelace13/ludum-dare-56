@@ -37,8 +37,7 @@ public class EndBehavior : MonoBehaviour
 
     public void PlayAgain()
     {
-        GameControl.GameController.gameWin = false;
-        GameControl.GameController.gameOver = false;
+        //GameControl.GameController.GameReset();
         SceneManager.LoadScene("Gameplay");
     }
 }

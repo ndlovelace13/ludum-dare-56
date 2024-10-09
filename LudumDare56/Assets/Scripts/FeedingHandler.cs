@@ -89,7 +89,7 @@ public class FeedingHandler : MonoBehaviour
                                 // if no food to be found, don't target
                                 while (GameControl.GameController.FetchFoodMapState(randomFoodInd) == false)
                                 {
-                                    randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
+                                    randomFoodInd = Random.Range(0, GameControl.GameController.baseIndex + 1);
                                     Debug.Log("No Food to be found at foodmap");
                                     yield return new WaitForEndOfFrame();
                                 };
@@ -111,7 +111,7 @@ public class FeedingHandler : MonoBehaviour
                             // if no food to be found, don't target
                             while (GameControl.GameController.FetchFoodMapState(randomFoodInd) == false)
                             {
-                                randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
+                                randomFoodInd = Random.Range(0, GameControl.GameController.baseIndex + 1);
                                 Debug.Log("No Food to be found at foodmap");
                                 yield return new WaitForEndOfFrame();
                             }
@@ -140,7 +140,7 @@ public class FeedingHandler : MonoBehaviour
                             // if no food to be found, don't target
                             while (GameControl.GameController.FetchFoodMapState(randomFoodInd) == false)
                             {
-                                randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
+                                randomFoodInd = Random.Range(0, GameControl.GameController.baseIndex + 1);
                                 Debug.Log("No Food to be found at foodmap");
                                 yield return new WaitForEndOfFrame();
                             }
@@ -163,7 +163,7 @@ public class FeedingHandler : MonoBehaviour
                         // if no food to be found, don't target
                         while (GameControl.GameController.FetchFoodMapState(randomFoodInd) == false)
                         {
-                            randomFoodInd = Random.Range(0, sortedFoodTargets.Count);
+                            randomFoodInd = Random.Range(0, GameControl.GameController.baseIndex + 1);
                             Debug.Log("No Food to be found at foodmap");
                             yield return new WaitForEndOfFrame();
                         }

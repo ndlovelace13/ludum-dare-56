@@ -136,7 +136,7 @@ public class GameControl : MonoBehaviour
     //ant stats
     public int speedLvl = 0;
     public int lifespanLvl = 0;
-    public int sizeLvl = 0;
+    public int efficientLvl = 0;
     public int strengthLvl = 0;
     public int spawnLvl = 0;
     public int exoLvl = 0;
@@ -148,9 +148,9 @@ public class GameControl : MonoBehaviour
     //all skill levels here
     public float[] antSpeed = { 2.5f, 4f, 6f, 10f };
     public float[] antLifespan = { 30f, 45f, 60f, 90f };
-    public float[] antSize = { 1f, 2f, 4f, 8f };
+    public float[] antEfficiency = { 1f, 0.5f, 0.25f, 0.1f };
     public float[] antStrength = { 1f, 2f, 4f, 8f };
-    public float[] antSpawn = { 4f, 3f, 2f, 1f };
+    public float[] antSpawn = { 3f, 2f, 1f, 0.5f };
     public float[] exoSkeleton = { 0, 0.1f, 0.2f, 0.3f};
     public float[] luckyAnts = { 0f, 0.01f, 0.02f, 0.05f};
     public float[] pestResist = { 0f, 0.1f, 0.2f, 0.3f };
@@ -176,7 +176,7 @@ public class GameControl : MonoBehaviour
 
     // quota to reach
     public int quota = 5;
-    public int timeChunk = 20;
+    public int timeChunk = 30;
     public float globalClock = 1.0f;
 
     public bool gameWin = false;
@@ -197,6 +197,9 @@ public class GameControl : MonoBehaviour
     // event flag
     public bool triggered = false;
 
+    //swarm handler
+    public bool swarmActive = false;
+
     // audio
     public AudioSource audioSource;
     public AudioSource winSource;
@@ -213,12 +216,63 @@ public class GameControl : MonoBehaviour
         
     }
 
+    //Use this to reinitialize all game states for playing again
+    public void GameReset()
+    {
+        for (int i = 0; i < antLevels.Count; i++)
+            antLevels[i] = 0;
+        UpgradeUpdate();
+        skillPoints = 0;
+        totalSkills = 0;
+
+
+        gameWin = false;
+        gameOver = false;
+
+        //event stuff
+        eventProb = 0.01f;
+        radEventWeight = 1;
+        chemEventWeight = 1;
+        attkEventWeight = 1;
+
+        //base stuff
+        baseIndex = 0;
+        basePoints = 0;
+
+        //time and quota stuff
+        globalClock = 0f;
+        quota = 5;
+        timeChunk = 30;
+
+        // initialize all completion objects
+        leafCompletion = new CompletionObject("Leaf");
+        appleCompletion = new CompletionObject("Apple");
+        meatCompletion = new CompletionObject("Meat");
+        carterCompletion = new CompletionObject("Carter Statue");
+        atmCompletion = new CompletionObject("ATM");
+        carCompletion = new CompletionObject("PT Cruiser");
+        houseCompletion = new CompletionObject("A Family Guy's House");
+        nuclearCompletion = new CompletionObject("Nuclear Power Plant");
+
+        spawnerList = GameObject.FindGameObjectsWithTag("spawners");
+        spawnerList = spawnerList.OrderBy(x => x.transform.position.x).ToArray<GameObject>();
+        // fill spawner list via tag
+        //foreach (GameObject spawner in GameObject.FindGameObjectsWithTag("spawners").OrderBy(x => x.transform.position.x));
+
+        for (int i = 0; i < spawnerList.Length; i++)
+        {
+            spawnerList[i].SetActive(false);
+        }
+        spawnerList[0].SetActive(true);
+
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
 
         // just a check to ensure we only calculate this when there is actual data loaded
-        if (initialAppleFood != 0)
+        if (initialAppleFood != 0 && !gameOver)
         {
             // update each completion object's completion value
             leafCompletion.calcPerc(initialLeafFood - totalLeafFood, initialLeafFood);
@@ -284,7 +338,7 @@ public class GameControl : MonoBehaviour
             else
             {
                 // set new quota
-                quota = (int)(quota + ((totalSkills + 1 + globalClock / 60) * 5 ));
+                quota = (int)(quota + ((totalSkills + 1 + globalClock / 120) * 5 ));
                 Debug.Log("New Quota: " + quota);
                 // set new time limit
                 timeChunk += 30;
@@ -316,30 +370,15 @@ public class GameControl : MonoBehaviour
 
     void Awake()
     {
-        GameController = this;
-        DontDestroyOnLoad(gameObject);
-        UpgradeInit();
-
-        // initialize all completion objects
-        leafCompletion = new CompletionObject("Leaf");
-        appleCompletion = new CompletionObject("Apple");
-        meatCompletion = new CompletionObject("Meat");
-        carterCompletion = new CompletionObject("Carter Statue");
-        atmCompletion = new CompletionObject("ATM");
-        carCompletion = new CompletionObject("PT Cruiser");
-        houseCompletion = new CompletionObject("A Family Guy's House");
-        nuclearCompletion = new CompletionObject("Nuclear Power Plant");
-
-        spawnerList = GameObject.FindGameObjectsWithTag("spawners");
-        spawnerList = spawnerList.OrderBy(x => x.transform.position.x).ToArray<GameObject>();
-        // fill spawner list via tag
-        //foreach (GameObject spawner in GameObject.FindGameObjectsWithTag("spawners").OrderBy(x => x.transform.position.x));
-
-        for (int i = 0; i <  spawnerList.Length; i++)
+        if (GameController == null)
         {
-            spawnerList[i].SetActive(false);
+            GameController = this;
+            DontDestroyOnLoad(gameObject);
         }
-        spawnerList[0].SetActive(true);
+        else
+            Destroy(this);
+        
+        UpgradeInit();
     }
 
     public void UpgradeInit()
@@ -348,7 +387,7 @@ public class GameControl : MonoBehaviour
         {
             speedLvl,
             lifespanLvl,
-            sizeLvl,
+            efficientLvl,
             strengthLvl,
             spawnLvl,
             exoLvl,
@@ -362,7 +401,7 @@ public class GameControl : MonoBehaviour
         {
             antSpeed,
             antLifespan,
-            antSize,
+            antEfficiency,
             antStrength,
             antSpawn,
             exoSkeleton,
@@ -377,7 +416,7 @@ public class GameControl : MonoBehaviour
     {
         speedLvl = antLevels[0];
         lifespanLvl = antLevels[1];
-        sizeLvl = antLevels[2];
+        efficientLvl = antLevels[2];
         strengthLvl = antLevels[3];
         spawnLvl = antLevels[4];
         exoLvl = antLevels[5];
@@ -395,9 +434,9 @@ public class GameControl : MonoBehaviour
     {
         return antLifespan[lifespanLvl];
     }
-    public float GetSize()
+    public float GetEfficiency()
     {
-        return antSize[sizeLvl];
+        return antEfficiency[efficientLvl];
     }
     public float GetStrength()
     {
@@ -429,6 +468,9 @@ public class GameControl : MonoBehaviour
                 if (totalHouseFood > 0) return true; break;
             case 7:
                 if (totalNuclearFood > 0) return true; break;
+            default:
+                Debug.Log("CASE NOT HANDLED");
+                break;
         }
         
         return false;

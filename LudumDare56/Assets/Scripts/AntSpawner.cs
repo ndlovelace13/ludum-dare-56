@@ -19,7 +19,10 @@ public class AntSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnDelay = GameControl.GameController.GetSpawn();
+        if (GameControl.GameController.swarmActive)
+            spawnDelay = 0.1f;
+        else
+            spawnDelay = GameControl.GameController.GetSpawn();
     }
 
     IEnumerator SpawnHandler()
@@ -33,6 +36,7 @@ public class AntSpawner : MonoBehaviour
                 currentTime = 0f;
                 GameObject newAnt = antPool.GetComponent<ObjectPool>().GetPooledObject();
                 newAnt.transform.position = transform.position;
+                newAnt.transform.localScale = transform.localScale;
                 newAnt.SetActive(true);
                 newAnt.GetComponent<Ant>().Activate();
                 newAnt.GetComponent<Ant>().home = gameObject;
