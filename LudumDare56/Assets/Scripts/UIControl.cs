@@ -8,13 +8,24 @@ public class UIControl : MonoBehaviour
 {
     [SerializeField] GameObject MutationsTrigger;
     [SerializeField] GameObject MutationsMenu;
+    [SerializeField] GameObject swarmButton;
     [SerializeField] TMP_Text statsField;
     [SerializeField] TMP_Text currentQuota;
     bool mutationsActive = false;
+
+    //swarm handling vars
+    bool canSwarm = true;
+    float currentTime = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    private void Awake()
+    {
+        GameControl.GameController.GameReset();
     }
 
     // Update is called once per frame
@@ -28,12 +39,20 @@ public class UIControl : MonoBehaviour
             "\nAnts Sacrificed: " + GameControl.GameController.antsConsumed +
             "\n\nAvg. Speed: " + GameControl.GameController.GetSpeed() + " in/sec" +
             "\nAvg. Lifespan: " + GameControl.GameController.GetLifespan() + " secs" +
-            "\nSize: " + GameControl.GameController.GetSize() +
+            "\nEfficiency: " + GameControl.GameController.GetEfficiency() + " secs" +
             "\nStrength: " + GameControl.GameController.GetStrength() +
             "\nBirthrate: " + GameControl.GameController.GetSpawn() + " sec cooldown";
 
         if(Input.GetKeyDown(KeyCode.Escape))
             MutationDeactivate();
+
+        //check for the swarmButton
+        if (GameControl.GameController.superLvl > 0 && canSwarm)
+        {
+            swarmButton.SetActive(true);
+            swarmButton.GetComponentInChildren<TMP_Text>().text = "";
+        }
+            
     }
 
     public void MutationActivate()
@@ -47,5 +66,34 @@ public class UIControl : MonoBehaviour
     {
         MutationsMenu.SetActive(false);
         MutationsTrigger.SetActive(true);
+    }
+
+    public void AntSwarm()
+    {
+        if (canSwarm)
+        {
+            //start swarm
+            GameControl.GameController.swarmActive = true;
+            canSwarm = false;
+            //disable button
+            swarmButton.GetComponent<Button>().interactable = false;
+            StartCoroutine(SwarmCooldown());
+        }
+    }
+
+    IEnumerator SwarmCooldown()
+    {
+        currentTime = 0f;
+        while (currentTime < GameControl.GameController.superAnts[GameControl.GameController.superLvl])
+        {
+            swarmButton.GetComponentInChildren<TMP_Text>().text = ((int)(GameControl.GameController.superAnts[GameControl.GameController.superLvl] - currentTime)).ToString();
+            if (GameControl.GameController.swarmActive && currentTime > 3f)
+                GameControl.GameController.swarmActive = false;
+            currentTime += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        canSwarm = true;
+        swarmButton.GetComponentInChildren<TMP_Text>().text = "";
+        swarmButton.GetComponent<Button>().interactable = true;
     }
 }

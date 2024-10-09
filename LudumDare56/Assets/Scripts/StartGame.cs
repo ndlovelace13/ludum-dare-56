@@ -20,6 +20,7 @@ public class StartGame : MonoBehaviour
 
     public void StartGameplay()
     {
+        //GameControl.GameController.GameReset();
         SceneManager.LoadScene("Gameplay");
     }
 }

@@ -27,8 +27,7 @@ public class Ant : MonoBehaviour
     //Index obj here
 
     //timing stuff
-    float feedingTime = 1f;
-    float deliveringTime = 1f;
+    float waitTime = 1f;
     float antSpeed = 2.5f;
     public float deathTimer = 20f;
     public int antStrength = 1;
@@ -42,6 +41,10 @@ public class Ant : MonoBehaviour
     //food
     GameObject food;
 
+    //storing location for flipping
+    float prevX;
+    float currentX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +54,23 @@ public class Ant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isActive && isAlive)
+        {
+            currentX = transform.localPosition.x;
+            if (currentX < prevX)
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x = -Mathf.Abs(newScale.x);
+                transform.localScale = newScale;
+            }
+            else if (currentX > prevX)
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x = Mathf.Abs(newScale.x);
+                transform.localScale = newScale;
+            }
+            prevX = currentX;
+        }
     }
 
     private void OnEnable()
@@ -61,10 +80,10 @@ public class Ant : MonoBehaviour
 
     public void Activate()
     {
+        currentX = transform.localPosition.x;
+        prevX = currentX;
         isActive = true;
-        Vector3 newScale = transform.localScale;
-        newScale.x = Mathf.Abs(newScale.x);
-        transform.localScale = newScale;
+        isAlive = true;
         animator = GetComponent<Animator>();
         targetControl = GameObject.FindWithTag("targetControl");
         currentState = antState.Birthed;
@@ -84,7 +103,7 @@ public class Ant : MonoBehaviour
         antSpeed = GameControl.GameController.GetSpeed();
         deathTimer = GameControl.GameController.GetLifespan();
         antStrength = (int) GameControl.GameController.GetStrength();
-        antSize = GameControl.GameController.GetSize();
+        waitTime = GameControl.GameController.GetEfficiency();
 
         //do some random number calc to make sure ants feel individual
         antSpeed = Random.Range(antSpeed - 0.5f, antSpeed + 0.5f);
@@ -129,7 +148,7 @@ public class Ant : MonoBehaviour
                 case antState.Feeding:
                     //wait for feedCooldown to be done
                     animator.SetBool("walk", false);
-                    if (currentTime < feedingTime && !readyToFeed)
+                    if (currentTime < waitTime && !readyToFeed)
                     {
                         currentTime += Time.deltaTime;
                     }
@@ -150,7 +169,7 @@ public class Ant : MonoBehaviour
                             readyToFeed = false;
                             currentState = antState.Returning;
                             Debug.Log("Now Returning");
-                            Flip();
+                            //Flip();
                         }
                     }
                     break;
@@ -167,7 +186,7 @@ public class Ant : MonoBehaviour
                 case antState.Delivering:
                     animator.SetBool("walk", false);
                     //wait for deliverCooldown to be done
-                    if (currentTime < deliveringTime && !readyToTarget)
+                    if (currentTime < waitTime && !readyToTarget)
                     {
                         currentTime += Time.deltaTime;
                     }
@@ -188,7 +207,7 @@ public class Ant : MonoBehaviour
                             readyToTarget = false;
                             currentState = antState.Traveling;
                             Debug.Log("now traveling");
-                            Flip();
+                            //Flip();
                         }
                     }
                     break;
@@ -209,6 +228,7 @@ public class Ant : MonoBehaviour
 
     IEnumerator DeathHandler()
     {
+        isAlive = false;
         Debug.Log("death Handler reahced");
         //add the currentLocation to the Feeding Locations
         targetControl.GetComponent<FeedingHandler>().foodSources.Add(gameObject);
