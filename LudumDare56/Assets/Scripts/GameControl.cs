@@ -265,6 +265,7 @@ public class GameControl : MonoBehaviour
         }
         spawnerList[0].SetActive(true);
 
+        textfield = GameObject.FindWithTag("scrollText").GetComponentInChildren<TMP_Text>();
     }
 
     // Update is called once per frame
