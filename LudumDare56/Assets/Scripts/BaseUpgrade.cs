@@ -15,7 +15,10 @@ public class BaseUpgrade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameControl.GameController.basePoints <= 0)
+            GetComponent<Button>().interactable = false;
+        else
+            GetComponent<Button>().interactable = true;
     }
 
     private void Awake()

@@ -189,7 +189,7 @@ public class GameControl : MonoBehaviour
     public TMP_Text textfield;
 
     // event probability
-    public float eventProb = 0.01f;
+    public float eventProb = 0.1f;
     public int radEventWeight = 1;
     public int chemEventWeight = 1;
     public int attkEventWeight = 1;
@@ -537,14 +537,14 @@ public class GameControl : MonoBehaviour
             generateInconvenience();
 
             // reduce probability by a little to prevent event overflow
-            eventProb -= (Mathf.Abs(eventProb - 1)) / 2;
+            eventProb = 0f;
             return true;
         }
         // event did not occur
         else
         {
             Debug.Log("didn't generate inconvenience");
-            eventProb += 0.01f;
+            eventProb += 0.05f;
             return false;
         }
     }
