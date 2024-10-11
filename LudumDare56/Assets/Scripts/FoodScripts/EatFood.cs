@@ -8,7 +8,7 @@ public class EatFood : MonoBehaviour
 {
     [SerializeField] private int mapIndex;
     [SerializeField] private Sprite circle;
-    [SerializeField] private float cellSize;
+    private float cellSize;
     [SerializeField] GameObject bite;
     private SpriteRenderer spriteRenderer;
     public FoodIndex[,] foodMap = null;
@@ -19,6 +19,7 @@ public class EatFood : MonoBehaviour
     void Awake()
     {       
         spriteRenderer = new SpriteRenderer();
+        cellSize = GetComponentInParent<PartitionSreen>().scale;
     }
 
     // Update is called once per frame

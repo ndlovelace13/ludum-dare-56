@@ -157,7 +157,7 @@ public class Ant : MonoBehaviour
                         currentTime = 0f;
                         if (target.tag == "foodSource")
                             target.GetComponent<FeedingLocation>().harvestQueue.Enqueue(this);
-                        else
+                        else if (target.tag != "spawners")
                             AssignFood(target);
                         readyToFeed = true;
                     }
