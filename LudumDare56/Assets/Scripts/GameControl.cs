@@ -500,7 +500,7 @@ public class GameControl : MonoBehaviour
         if (basePoints > 0)
         {
             // ensure there is a next base in the list
-            if (baseIndex <= spawnerList.Length - 1)
+            if (baseIndex < spawnerList.Length - 1)
             {
                 // turn off spawner, turn on new spawner
                 spawnerList[baseIndex].gameObject.SetActive(false);
