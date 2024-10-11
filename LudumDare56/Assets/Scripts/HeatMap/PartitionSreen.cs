@@ -24,7 +24,7 @@ public class PartitionSreen : MonoBehaviour
     private Vector2[,] gridMap, locMap;
     int vertical, horizontal, cols, rows;
 
-    [SerializeField] private float scale;
+    [SerializeField] public float scale;
     private SpriteRenderer spriteRenderer;
 
     [SerializeField] private Sprite sprite;

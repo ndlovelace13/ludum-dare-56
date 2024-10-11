@@ -273,7 +273,7 @@ public class GameControl : MonoBehaviour
     {
 
         // just a check to ensure we only calculate this when there is actual data loaded
-        if (initialAppleFood != 0 && !gameOver)
+        if (initialLeafFood != 0 && !gameOver)
         {
             // update each completion object's completion value
             leafCompletion.calcPerc(initialLeafFood - totalLeafFood, initialLeafFood);
@@ -328,7 +328,7 @@ public class GameControl : MonoBehaviour
         //Debug.Log(timeChunk);
         if ((int)globalClock == timeChunk && triggered == false)
         {
-            Debug.Log("timechunk is working");
+            // Debug.Log("timechunk is working");
             // failed to meet quota
             if (foodConsumed < quota && !gameOver)
             { Debug.Log("YOU LOST!!!!"); loseSource.Play();
